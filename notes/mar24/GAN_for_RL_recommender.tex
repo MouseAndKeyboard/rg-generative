@@ -7,6 +7,8 @@
     \maketitle
 
     \section{Setting}
+
+    \subsection{Intuition}
     \begin{itemize}
         \item You work at YouTube and want to recommend YouTube videos to your users to maximise their "utility" from watching videos.
         \item You have access to a set of all available videos (all YouTube videos) to show the user.
@@ -15,7 +17,16 @@
         \item You have access to users' historical view data.
         \item[Summary:] \emph{users are recommended a page of items and they provide feedback, and then the system recommends a new page of items.}
     \end{itemize}
-    
+
+    \subsection{Assumptions}
+    \begin{enumerate}
+        \item Users are not passive. Given a set of $k$ items, users will attempt to maximise their own reward $r$.
+        \item Watching each video incurs an opportunity cost, if watching a video is a waste of time or mental energy the user can choose to \emph{not} click on any recommendations.
+        \item Reward is the marginal benefit of taking an action, this means that $r$ depends not only on the video about to be watched but also the user's watch history leading up to this video.
+    \end{enumerate}
+
+    \section{Framing}
+
     
 
 \end{document}
