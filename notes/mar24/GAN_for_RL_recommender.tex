@@ -40,17 +40,13 @@
 
     \textbf{Action}
 
-    The action is a selection of videos to present the user, that means if there is $\mathcal{I}$ total available videos to select from and you are showing the user $k$ ideos at a time, then action $A^t$ is selected $A^t \in {\mathcal{I^t} \choose k}$. As you can imagine, the possible action space is absolutely huge even for medium sized $I^t$ and $k$*. 
-
-    *This problem is addressed through their \emph{Cascading Q-Network} architecture.
+    The action is a selection of videos to present the user, that means if there is $\mathcal{I}$ total available videos to select from and you are showing the user $k$ ideos at a time, then action $A^t$ is selected $A^t \in {\mathcal{I^t} \choose k}$. As you can imagine, the possible action space is absolutely huge even for medium sized $I^t$ and $k$\footnote{This problem is addressed through their \emph{Cascading Q-Network} architecture.}. 
 
     \textbf{Reward}
 
     $r(s^t, A^t, a^t)$ measures a user's utility or satisfaction after making a choice. A recommendation system should attempt to maximise this. (in theory this reward could also consider company goals to align the recommneder with the company moreso).
 
-    Importantly, measuring a users utility is a hard task* as we do not know $\phi ^*$ and often times "synthetic" reward signals are crafted (e.g. +1 reward whenever you click an item).
-
-    *This problem is addressed through their \emph{Generative Adversarial User Model}
+    Importantly, measuring a users utility is a hard task\footnote{This problem is addressed through their \emph{Generative Adversarial User Model}} as we do not know $\phi ^*$ and often times "synthetic" reward signals are crafted (e.g. +1 reward whenever you click an item).
 
     \section{Contribution}
 
