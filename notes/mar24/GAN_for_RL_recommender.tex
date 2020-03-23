@@ -32,16 +32,23 @@
     \textbf{Environment}
 
     It may be strange to think about it at first but:
-    The "user" in this scenario is the environment which we interact with by selecting videos/documents to recommend.
+    The "user" in this scenario is the environment which we interact with by selecting videos/documents to recommend. The user obeys their policy $\phi ^* (S^t, A^t)$, selecting a choice based on the current state and the recommending agent's selected action (what videos were shown).
 
     \textbf{State}
 
-    The current environment state refers to "an ordered sequenceof a user’s historical clicks"
+    The current environment state $s^t$ refers to "an ordered sequenceof a user’s historical clicks"
 
     \textbf{Action}
 
     The action is a selection of videos to present the user, that means if there is $\mathcal{I}$ total available videos to select from and you are showing the user $k$ ideos at a time, then action $A^t$ is selected
     $A^t \in {\mathcal{I^t} \choose k}$
+
+    \section{Contribution}
+
+    \subsection{Generative Adversarial User Model}
+    
+
+    \subsection{Cascading RL Policy for Recommendation}
 
 
 \end{document}
