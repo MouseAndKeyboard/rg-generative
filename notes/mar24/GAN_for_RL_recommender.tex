@@ -65,8 +65,17 @@
 
     \subsection{Cascading RL Policy for Recommendation}
 
-    One of the problems was the combinatorial action space ${I^t \choose k}$
+    One of the problems was the combinatorial action space ${\mathcal{I}^t \choose k}$
+    They solve this by creating $k$-many Q functions and applying them in a cascading fashion.
+    
+    Recomender actions as $A = {a_1 : k} \subset \mathcal{I}$
 
+    Optimal action as $A^* = {a_{1: k}^*} = \arg \max _A Q^* (s, A)$
 
+    $$\max_{a_1 : k} Q^* (s, a_{1 : k}) = \max_{a_1} (\max_{a_2 : k} Q^* (s, a_{1 : k}))$$
+
+    Each Q-function considers the previous selection to decide the next document/video to select/add to the set which will be recommended to the user.
+
+    
     
 \end{document}
