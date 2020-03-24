@@ -36,7 +36,9 @@
 
     \textbf{State}
 
-    The current environment state $s^t$ refers to "an ordered sequenceof a user’s historical clicks"
+    The current environment state $s^t$ refers to "an ordered sequenceof a user’s historical clicks".
+
+    The current state can be represented as an embedding of the historical sequence of items clicked by the user.
 
     \textbf{Action}
 
@@ -57,11 +59,14 @@
 
     We have a discriminator $r$ which tries to differentiate the actual user's actions from the generated actions.
 
-    
+    As mentioned before the state can be represented as an embedding of past states. They provide two suggestions on how to to this: via LSTM or via a position weight matrix
 
-    They mention somgthing about how the process "may be unstable due to the non-complexity nature of the problem". 
+    They mention somgthing about how the process "may be unstable due to the non-complexity nature of the problem". I didn't really have time to comprehend what these things mean but they say they use a some sort of "special regularization" for initializing the training process.
 
     \subsection{Cascading RL Policy for Recommendation}
 
+    One of the problems was the combinatorial action space ${I^t \choose k}$
 
+
+    
 \end{document}
