@@ -51,7 +51,15 @@
     \section{Contribution}
 
     \subsection{Generative Adversarial User Model}
+    We need a way to estimate $\phi ^*$ so that we can accurately reccomend things to the user.
 
+    We have a generator $\phi$ which tries to mimic the action sequences provided by a real user (note: all users attempt to maximise their reward function $r$).
+
+    We have a discriminator $r$ which tries to differentiate the actual user's actions from the generated actions.
+
+    
+
+    They mention somgthing about how the process "may be unstable due to the non-complexity nature of the problem". 
 
     \subsection{Cascading RL Policy for Recommendation}
 
