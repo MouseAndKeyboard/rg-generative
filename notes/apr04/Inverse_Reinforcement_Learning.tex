@@ -76,6 +76,7 @@
 
     When looking at discrete problems, we represent the functions as \emph{vectors indexed by the state}.
     For example:
+    $$\mathbf{I} = \mbox{identity}$$  
     $$\mathbf{R}[S_i] = \mbox{reward at $S_i$}$$  
     $$\mathbf{V}^\pi[S_i] = \mbox{value at $S_i$ while following policy $\pi$}$$  
     $$\mathbf{P}_a[S_i, S_j] = \mbox{starting in $S_i$, taking action $a$, probability of arriving in $S_j$ }$$  
@@ -206,8 +207,28 @@
     So: $\pi(s)$ will perform worse than $a_2$ when $r_0 > r_1$. Therefore in this case, our selection of $\mathbf{R}$ was poor.
     It's important to note, $\pi(s)$ should be the optimal action meaning, there are no other better actions which is where the $\forall \, a \in (A - \{\pi(s)\})$ component of the original equation comes from.
 
+    At this point it's also clear why the degenerate solution $\mathbf{R} = 0$ exists.
+
+    \subsection{The unique optimal policy}
+    By replacing all of the inequalities above with strict inequalities:
+    $$(\mathbf{P}_{\pi(s)} - \mathbf{P}_a)(\mathbf{I} - \gamma \mathbf{P}_{\pi(s)})^{-1} \mathbf{R} \succ 0$$
+    We can see that this strict inequaliy will yield $\pi(s)$ as the \emph{unique} optimal policy for $\mathbf{R}$ meaning that degenerate solutions such as $\mathbf{R} = 0$ are removed. This, however, does not exclude the fact that there can be multiple valid $\mathbf{R}$s per $\pi(s)$.
+
+    Before:
+    \begin{itemize}
+        \item Many valid $\pi(s)$ per $\mathbf{R}$ and
+        \item Many valid $\mathbf{R}$s per $\pi(s)$
+    \end{itemize}
+    Now: 
+    \begin{itemize}
+        \item 1 valid $\pi(s)$ per $\mathbf{R}$ an
+        \item Many valid $\mathbf{R}$s per $\pi(s)$
+    \end{itemize}
+    
+
     
    
+
     \section{Low Level}
 
 
