@@ -275,12 +275,28 @@
 
     Just solve the following linear programming task:
 
+    \textbf{(what is LP?):}
+
+    Linear programming (LP, also called linear optimization) is a method to achieve the best outcome (such as maximum profit or lowest cost) in a mathematical model whose requirements are represented by linear relationships. Linear programming is a special case of mathematical programming (also known as mathematical optimization). 
+
     $$\text{maximise} \sum_{i=1}^N \min_{a \in \{ a_2, \dots, a_k \}} (P_{\pi(s)}(i)- P_a(i)) (I - \gamma P_{\pi(s)})^{-1} R - \gamma ||R||_1$$
     $$s.t. (P_{\pi(s)} - P_a)(I - \gamma P_{a_1})^{-1} R \succeq 0 \;\;\;\; \forall a \in (A - \pi(s)) $$
     $$|R_i| \le R_{\max}, i = 1, \dots, N$$
 
+    We can see each element that has been discussed so far:
+    $$(P_{\pi(s)} - P_a)(I - \gamma P_{a_1})^{-1} R \succeq 0 \;\;\;\; \forall a \in (A - \pi(s)) $$
+    Is the constraint for $\mathbf{R}$ to be optimal. 
+
+    $$\text{maximise} \sum_{i=1}^N \min_{a \in \{ a_2, \dots, a_k \}} (P_{\pi(s)}(i)- P_a(i)) (I - \gamma P_{\pi(s)})^{-1} R - \gamma ||R||_1$$
+    Is the optimization of $\mathbf{R}$ using 2.4.1 and 2.4.2
+    
+    $$|R_i| \le R_{\max}, i = 1, \dots, N$$
+    Is one of the initial constraints of the problem (that the rewards are bounded by some $R_{\max}$)
+
+
 
     \section{Their Experiments and Comments}
+
 
 
 \end{document}
