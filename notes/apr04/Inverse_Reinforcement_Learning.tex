@@ -253,8 +253,15 @@
     IF $\pi$ is optimal then the value being subtracted will always be the value of the second best action (\emph{because $\pi$ picks the best one}).
     
     Simply performing this over every action will present you with a measure for evaluating different $\mathbf{R}$s.
-
+        
+        
     \subsubsection{"Overfitting" $\mathbf{R}$}
+
+    \includegraphics[width=7cm]{fig2.png}
+        \textbf{Top: recovered R with small $\lambda$ Bottom: recovered R with large $\lambda$}
+    
+
+
     Although our goal is to extract an exact reward function there may still be issues with whether we will extract the true reward function.
     
     For example, in a state where the policy must make an arbitrary decision (say: move up or move down) and the same decision is made each time. We may learn an incorrect reward function even though the agent was acting optimally.
@@ -262,9 +269,18 @@
     They suggest a general solution to this and other related problems by introducing a penalty function $-\lambda ||\mathbf{R}||$. The paper proposes that solutions with smaller rewards are "simpler".
 
     
-    
+
+
     \subsubsection{How to actually pick your $\mathbf{R}$}
 
+    Just solve the following linear programming task:
+
+    $$\text{maximise} \sum_{i=1}^N \min_{a \in \{ a_2, \dots, a_k \}} (P_{\pi(s)}(i)- P_a(i)) (I - \gamma P_{\pi(s)})^{-1} R - \gamma ||R||_1$$
+    $$s.t. (P_{\pi(s)} - P_a)(I - \gamma P_{a_1})^{-1} R \succeq 0 \;\;\;\; \forall a \in (A - \pi(s)) $$
+    $$|R_i| \le R_{\max}, i = 1, \dots, N$$
+
+
+    \section{Their Experiments and Comments}
 
 
 \end{document}
