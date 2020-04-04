@@ -2,6 +2,7 @@
 \title{Notes for: Algorithms for Inverse Reinforcement Learning}
 \author{-- \thanks{paper: https://ai.stanford.edu/~ang/papers/icml00-irl.pdf}}
 \date{\today}
+\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{amsfonts}
 
@@ -79,6 +80,20 @@
     $$\mathbf{V}^\pi[S_i] = \mbox{value at $S_i$ while following policy $\pi$}$$  
     $$\mathbf{P}_a[S_i, S_j] = \mbox{starting in $S_i$, taking action $a$, probability of arriving in $S_j$ }$$  
 
+    \subsection{How to find R}
+
+    The following condition must hold if \textbf{R} is an optimal solution:
+    $$(\mathbf{P}_{\pi(s)} - \mathbf{P}_a)(\mathbf{I} - \gamma \mathbf{P}_{\pi(s)})^{-1} \mathbf{R} \succeq 0 \;\;\;\;\; \forall \, a \in (A - \{\pi(s)\})$$
+  
+    $X \succeq Y$ mathematically means that $x \ge y \;\;\; \forall x \in X, y \in Y $
+
+    $\pi(s)$ is the optimal action (what we observe) and therefore $a$ is every action other than the optimal action.
+
+    This can be intuitively viewed with an example:
+    \begin{matrix}
+        1 & 2 & 3\\
+        a & b & c
+        \end{matrix}
 
     \section{Low Level}
 
