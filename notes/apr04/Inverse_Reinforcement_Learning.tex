@@ -58,7 +58,7 @@
         \item Continuous environments where you are only provided with a finite set of observed trajectories (infinite state space with limited information about the agent). This is the most realistic setting.
     \end{enumerate}
 
-    \section{Medium Level}
+    \section{Core content}
     
     \subsection{Notation used by the paper}
     It's all pretty standard stuff:
@@ -238,14 +238,32 @@
     The paper considers two things when evaluating:
     \begin{enumerate}
         \item Demand that it makes $\pi$ optimal (this one's pretty obvious because if it didn't we wouldn't be solving the IRL problem)
-        \item Select $\mathbf{R}$s which optimize $\pi$ but minimize other policies.
+        \item Select an $\mathbf{R}$ which optimizes $\pi$ but minimizes other policies.
     \end{enumerate}
     
+    The paper presents an option for achieving (2.). We can evaluate $\mathbf{R}$s using the following:
+
+    $$\sum_{s \in S} \left ( Q^\pi (s, \pi(s)) - \max_{a \in \left(A - \pi(s)\right)} Q^\pi (s, a) \right)$$
+
     
+    In plain english:
 
+    
+    We find the value of following the policy $\pi$ given $\mathbf{R}$. We then subtract the the value of picking the best action out of the remaining actions - \emph{we exclude the one $\pi$ picks}.
+    IF $\pi$ is optimal then the value being subtracted will always be the value of the second best action (\emph{because $\pi$ picks the best one}).
+    
+    Simply performing this over every action will present you with a measure for evaluating different $\mathbf{R}$s.
+
+    \subsubsection{"Overfitting" $\mathbf{R}$}
+    Although our goal is to extract an exact reward function there may still be issues with whether we will extract the true reward function.
+    
+    For example, in a state where the policy must make an arbitrary decision (say: move up or move down) and the same decision is made each time. We may learn an incorrect reward function even though the agent was acting optimally.
+
+    They suggest a general solution to this and other related problems by introducing a penalty function $-\lambda ||\mathbf{R}||$. The paper proposes that solutions with smaller rewards are "simpler".
+
+    
+    
     \subsubsection{How to actually pick your $\mathbf{R}$}
-
-    \section{Low Level}
 
 
 
