@@ -80,21 +80,134 @@
     $$\mathbf{V}^\pi[S_i] = \mbox{value at $S_i$ while following policy $\pi$}$$  
     $$\mathbf{P}_a[S_i, S_j] = \mbox{starting in $S_i$, taking action $a$, probability of arriving in $S_j$ }$$  
 
-    \subsection{How to find R}
+    \subsection{Constraint on R}
 
     The following condition must hold if \textbf{R} is an optimal solution:
     $$(\mathbf{P}_{\pi(s)} - \mathbf{P}_a)(\mathbf{I} - \gamma \mathbf{P}_{\pi(s)})^{-1} \mathbf{R} \succeq 0 \;\;\;\;\; \forall \, a \in (A - \{\pi(s)\})$$
   
-    $X \succeq Y$ mathematically means that $x \ge y \;\;\; \forall x \in X, y \in Y $
+    $$x \succeq y \text{ if and only if } \forall i \; x_i \ge y_i$$
 
     $\pi(s)$ is the optimal action (what we observe) and therefore $a$ is every action other than the optimal action.
 
     This can be intuitively viewed with an example:
-    \begin{matrix}
-        1 & 2 & 3\\
-        a & b & c
-        \end{matrix}
 
+
+    $$
+    \mathbf{P_{\pi(s)}} = \begin{bmatrix}
+        0.2 & 0.8 \\
+        0.5 & 0.5 
+    \end{bmatrix}
+    $$
+    Where each row represents a possible starting state $[S_0 $ or $ S_1]$ and each column represents a possible next state $[S'_0 $ or $ S'_1]$ all given you take the action $\pi(s)$. The probability of transitioning from $S \to S'$ is the value in that cell.
+
+    $$
+    \mathbf{P}_{a_2} = \begin{bmatrix}
+        0.9 & 0.1 \\
+        0.7 & 0.3 
+    \end{bmatrix}
+    $$
+
+    Where $a_2$ is an example of an action other than $\pi(s)$.
+
+    $$
+    \left (
+    \begin{bmatrix}
+        0.2 & 0.8 \\
+        0.5 & 0.5 
+    \end{bmatrix}
+        -
+    \begin{bmatrix}
+        0.9 & 0.1 \\
+        0.7 & 0.3 
+    \end{bmatrix}
+    \right ) 
+    \left (
+        \begin{bmatrix}
+            1 & 0 \\
+            0 & 1 
+        \end{bmatrix}
+        -
+        \gamma
+        \begin{bmatrix}
+            0.2 & 0.8 \\
+            0.5 & 0.5 
+        \end{bmatrix}
+    \right )^{-1}
+    \begin{bmatrix}
+        r_0 \\
+        r_1 
+    \end{bmatrix} \succeq 0 
+    $$
+    \begin{center}
+        let $\gamma = 0.8$ 
+    \end{center} 
+    $$
+    \begin{bmatrix}
+        -0.6 & 0.7 \\
+        -0.2 & 0.2 
+    \end{bmatrix} 
+        \begin{bmatrix}
+            0.79 & 0.84 \\
+            0.53 & 1.11 
+        \end{bmatrix}
+    \begin{bmatrix}
+        r_0 \\
+        r_1 
+    \end{bmatrix} \succeq 0 
+    $$
+    
+    If we let $r_0 = 1$ and $r_1 = 0$ (arbitrarily chosen) meaning that in state $S_0$ the agent receives 1 reward and in state $S_1$ the agent receives 0 reward. Any policy which maximises getting to state $S_0$ will be preferable (better).
+    
+    $$
+    \begin{bmatrix}
+        -0.6 & 0.7 \\
+        -0.2 & 0.2 
+    \end{bmatrix} 
+        \begin{bmatrix}
+            0.79 & 0.84 \\
+            0.53 & 1.11 
+        \end{bmatrix}
+    \begin{bmatrix}
+        1 \\
+        0 
+    \end{bmatrix} \succeq 0 
+    $$
+    $$
+    \begin{bmatrix}
+        -0.103 \\
+        -0.052 
+    \end{bmatrix} \not \succeq 
+    \begin{bmatrix}
+        0 \\
+        0 
+    \end{bmatrix}
+    $$
+
+    Looking at our result we can see that the parameters $r_0=1$ and $r_1=0$ do not satisfy the condition. This makes logical sense as: 
+    
+    $$
+    \mathbf{P_{\pi(s)}} = \begin{bmatrix}
+        0.2 & 0.8 \\
+        0.5 & 0.5 
+    \end{bmatrix}
+    $$
+    $$
+    \mathbf{P}_{a_2} = \begin{bmatrix}
+        0.9 & 0.1 \\
+        0.7 & 0.3 
+    \end{bmatrix}
+    $$
+    and we can see that 
+    
+    $\pi(s)$ will (with probability $\frac{0.2+0.5}{2} = 0.35$) will leave the agent in $S_0$  and
+    
+    $a_2$ will (with probability $\frac{0.9+0.7}{2} = 0.8$) leave the agent in $S_0$.
+
+    So: $\pi(s)$ will perform worse than $a_2$ when $r_0 > r_1$. Therefore in this case, our selection of $\mathbf{R}$ was poor.
+    It's important to note, $\pi(s)$ should be the optimal action meaning, there are no other better actions which is where the $\forall \, a \in (A - \{\pi(s)\})$ component of the original equation comes from.
+
+    
+   
     \section{Low Level}
 
 
