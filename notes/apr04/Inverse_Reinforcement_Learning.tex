@@ -3,6 +3,7 @@
 \author{-- \thanks{paper: https://ai.stanford.edu/~ang/papers/icml00-irl.pdf}}
 \date{\today}
 \usepackage{graphicx}
+\usepackage{amsfonts}
 
 \begin{document}
     \maketitle
@@ -43,6 +44,17 @@
 
 
     \section{Medium Level}
+    
+    \subsection{Notation used by the paper}
+    It's all pretty standard stuff:
+    
+    \begin{itemize}
+        \item $S$ is a finite set of $N$ states
+        \item $A = \{a_1, \dots, a_k\}$
+        \item $P_{sa}(\cdot)$ are the state transition probabilities upon taking action $a$ in state $s$
+        \item $\gamma \in [0,1) is the discount factor$
+        \item $R: S \to \mathbb{R}$ is the reward function, bounded in absolute value by $R_{\max}$. They write the reward function as $R(s)$. 
+    \end{itemize}
 
     \section{Low Level}
 
