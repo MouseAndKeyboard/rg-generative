@@ -296,9 +296,35 @@
 
 
     \section{Their Experiments and Comments}
-    
+
+    They don't actually provide any data for their experiments and this paper was published in 2000. There are more modern approaches to extracting reward signals. For example, using a GAN to estimate a user's behavior can be then used to make inference about their preferences based on their actions https://arxiv.org/abs/1812.10613.
+
     \subsection{5x5 Grid world}    
+
+    \begin{itemize}
+        \item Start in the lower left cell of a 5x5 grid
+        \item The top right cell is an absorbing state where the agent receives 1 reward
+        \item The environment is stochastic, there is a 30\% chance that the action chosen will be randomized resulting in a random movement instead.
+        
+        
+
+    \end{itemize}
+
     \subsection{Mountain car}
+
+    \includegraphics[width=7cm]{fig1.png}
+    
+    \begin{itemize}
+        \item -1 reward per step until the car reaches the terminal point.
+        \item Movements are continuous
+    \end{itemize}
+
     \subsection{Sample based, continuous 5x5 Grid world}
+
+    \begin{itemize}
+        \item Modified version of the 5x5 grid world where the environment is continuous: The state was  $[0,1] \times [0,1]$.
+        \item The environment is still stochastic as after each action, noise $[-0.1, 0.1]$ is added.
+        \item We only have access to trajectories of actions rather than direct access to the policy.
+    \end{itemize}
 
 \end{document}
