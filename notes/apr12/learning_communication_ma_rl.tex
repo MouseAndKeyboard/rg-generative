@@ -7,6 +7,41 @@
 \begin{document}
     \maketitle
     \section{High Level and Motivation}
+
+    \subsection{Motivation}
+
+    \paragraph{Switch Riddle}
+    
+
+    \emph{
+        \begin{enumerate}
+            \item After months of evading the police, you have finally been caught and sent to prison.
+            \item You are put into a cell, unable to communicate with any of your partners in crime.
+            \item Each day the warden selects a prisoner at random and brings them to the interrogation room
+            \item The interrogation room contains only a light bulb and a toggle switch
+            \item The prisoner can observe the current state of the light bulb and can toggle the light bulb ON/OFF
+            \item The prisoner may also announce if they believe all the prisoners have visited the interrogation room
+            \item If the prisoner's announcement is true, then all prisoners are set free, but if the announcement is incorrect, all the prisoners are executed.
+            \item[Note!] The warden leaves and the prisoners huddle together to discuss their fate. Can they agree on a protocol that will guarantee their freedom?
+        \end{enumerate}
+
+    \subsection{Problem definition}
+
+    \paragraph{Explicitly} 
+    How can we apply an end-to-end deep RL approach to learning:
+    fully cooperative, partially observable, sequential multi-agent decision making environments.
+    \paragraph{Definitions}
+    \begin{enumerate}
+        \item[multi-agent] There are multiple agents which try to maximise their own reward signals in an environment.
+        \item[partially observable] Each agent does not have access to the underlying markov state of the environment, each agent can only make \emph{observations} which are correlated with the true state.
+        \item[sequential] There is a temporal/sequential aspect to the environments where observed states are dependent on previous states and actions.
+        \item[fully cooperative] Agents' reward signals are shared (each agent has its own reward function however the value we maximise is the sum of rewards for all agents [basically rewards are shared among all agents])
+        \item[end-to-end deep RL] A single neural network architecture. (as opposed to multiple neural networks)
+    \end{enumerate}
+        
+    
+
+    
     \section{Core content}
     \section{Their Experiments and Comments}
 \end{document}
