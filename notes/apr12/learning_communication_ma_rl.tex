@@ -54,7 +54,7 @@
     \paragraph{What is RIAL?} RIAL is the standard way of doing multi-agent reinforcement learning. 
     \begin{enumerate}
         \item One main approach is to basically leave a bunch of RL agents in an environment and they must maximise their own reward, treating other agents as part of the environment.
-        \item Another approach is to train a single network which works for all agents and then each agent uses this central network for choosing actions
+        \item Another approach is to train a single network which works for all agents and then each agent uses this central network for choosing actions. Then each agent updates the central network based on its reward.
     \end{enumerate}
 
     \paragraph{} A main conceptual fact of RIAL is that each agent itself is end-to-end trainable (basically you can train each agent independently and their own trainings don't really impact other agents [besides their impact on the environment]) but it is not end-to-end trainable across agents (there are no gradient flows between agents).
@@ -64,7 +64,7 @@
 
     \paragraph{What is DIAL?} DIAL is the new method proposed in the paper and allows for end-to-end training across agents. 
    
-
+    \paragraph{} In reality it's one big network, however, conceptually it's easier to think about DIAL being lots of smaller networks for each agent with a single connection between each network allowing for communication. Because each network is linked through these connections, backpropagation is able to directly inform networks how to change how they are communicating through this channel.
 
     \section{Core content}
 
