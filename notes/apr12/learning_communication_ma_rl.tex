@@ -3,6 +3,7 @@
 \author{Michael N.\thanks{paper: https://arxiv.org/abs/1605.06676}}
 \date{\today}
 \usepackage{graphicx}
+\usepackage{dsfont}
 \usepackage{amsmath}
 
 \begin{document}
@@ -115,8 +116,10 @@
     \paragraph{\emph{Discretise/Regularise Unit} (DRU)} The DRU will operate differently depending on whether it is in the \emph{centralised learning} or \emph{decentralised execution} phase. 
       
     \begin{enumerate}
-        \item test
+        \item[centralised learning.] $\text{DRU}(m^a_t) = \text{Logistic}(\mathcal{N}(m^a_t, \sigma))$
+        \item[decentralised execution.] $\text{DRU}(m^a_t) = \mathds{1} \{ m^a_t > 0 \}$
     \end{enumerate}
+    
 
     \section{Their Experiments and Comments}
 \end{document}
