@@ -86,12 +86,37 @@
     \paragraph{actions} Each time step $t$, two actions are picked
     \begin{enumerate}
         \item[environment action] Directly impacts the environment (think: traditional action such as moving)
-        \item[communicaton action] A "binary" vector which is observed by other agents but has no direct impact on reward: $\begin{bmatrix}0 & 1 & 0 & 0 & 1 & 1\end{bmatrix}^T$
+        \item[communicaton action] A "binary" vector which is observed by other agents but has no direct impact on reward e.g.: $\begin{bmatrix}0 & 1 & 0 & 0 & 1 & 1\end{bmatrix}$
     \end{enumerate}
     \paragraph{states} The environment is partially observable, each agent is able to make observations $o_t^a$ which are correlated with the markov state $s_t$
 
-    \subsection{How to build}
-
+    \subsection{How it works}
+    \includegraphics[width=12.1cm]{fig1.png}    
     
+    \subsubsection{RIAL}
+    \begin{enumerate}
+        \item An agent receives observations from the environment and if applicable, any messages from other agents.
+        \item This information is inputted into 2 DQNs, which is represented by Q-Net. These two DQNs output values.
+        \item The action select (such as $\epsilon$-greedy) will pick which environment action to take and will select which communication action to take based on the outputs of the DQNs (1 DQN each).
+        \item Rewards are received and then backpropagation happens, each agent's actions are updated based on their reward from the environment. (there is no information shared on "how good" communication actions were)
+    \end{enumerate}
+    
+    \subsubsection{DIAL}
+
+    \paragraph{Extract} \emph{During centralised learning, communication actions are replaced with direct connections between the output of one agent's network and the input of another agent's. Thus, while the task restricts communication to discrete messages, during learning the agents are free to send real-valued messages to each other}
+
+    \paragraph{Interpretation} The neural network behaves differently during \emph{centralised learning} vs. \emph{decentralised execution} as during the learning process it can send/receive more granular communication instructions (real valued communication vectors). This is allowed by the behaviour of the DRU (explained later).
+
+    \paragraph{C-Net} The C-Net is a really is a network which outputs two values:
+    \begin{enumerate}
+        \item[$Q(\cdot)$] The Q-values as a normal DQN might. This is fed into the action selector and an \emph{environment action} is chosen.
+        \item[$m^a_t$] A real valued vector message to send to other agents. For example: $\begin{bmatrix} 0.44 & 1.45 & 22.42 & -0.2 & 1.0 & -0.01 \end{bmatrix}$. This is sent to the DRU.
+    \end{enumerate}
+    \paragraph{\emph{Discretise/Regularise Unit} (DRU)} The DRU will operate differently depending on whether it is in the \emph{centralised learning} or \emph{decentralised execution} phase. 
+      
+    \begin{enumerate}
+        \item test
+    \end{enumerate}
+
     \section{Their Experiments and Comments}
 \end{document}
