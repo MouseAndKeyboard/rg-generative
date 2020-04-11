@@ -22,8 +22,10 @@
             \item The prisoner can observe the current state of the light bulb and can toggle the light bulb ON/OFF
             \item The prisoner may also announce if they believe all the prisoners have visited the interrogation room
             \item If the prisoner's announcement is true, then all prisoners are set free, but if the announcement is incorrect, all the prisoners are executed.
-            \item[Note!] The warden leaves and the prisoners huddle together to discuss their fate. Can they agree on a protocol that will guarantee their freedom?
+            \item[When they arrive:] The warden leaves and the prisoners huddle together to discuss their fate. Can they agree on a protocol that will guarantee their freedom?
         \end{enumerate}}
+
+        \paragraph{} Can we enable agents to form communication protocols using deep reinforcement learning?
 
     \subsection{Problem definition}
 
@@ -39,9 +41,37 @@
         \item[end-to-end deep RL] A single neural network architecture. (as opposed to multiple neural networks)
     \end{enumerate}
         
-    
+    \subsection{Architecture}
+
+    \paragraph{} They discuss two architectures for enabling communication between agents:
+    \begin{enumerate}
+        \item[RIAL] \emph{Reinforced Inter-Agent Learning}
+        \item[DIAL] \emph{Differentiable Inter-Agent Learning}
+    \end{enumerate}
+
+    \subsubsection{Reinforced Inter-Agent Learning}
+
+    \paragraph{What is RIAL?} RIAL is the standard way of doing multi-agent reinforcement learning. 
+    \begin{enumerate}
+        \item One main approach is to basically leave a bunch of RL agents in an environment and they must maximise their own reward, treating other agents as part of the environment.
+        \item Another approach is to train a single network which works for all agents and then each agent uses this central network for choosing actions
+    \end{enumerate}
+
+    \paragraph{} A main conceptual fact of RIAL is that each agent itself is end-to-end trainable (basically you can train each agent independently and their own trainings don't really impact other agents [besides their impact on the environment]) but it is not end-to-end trainable across agents (there are no gradient flows between agents).
+
+
+    \subsubsection{Differentiable Inter-Agent Learning}
+
+    \paragraph{What is DIAL?} DIAL is the new method proposed in the paper and allows for end-to-end training across agents. 
+   
+
+
+    \section{Core content}
 
     
-    \section{Core content}
+    
+
+
+
     \section{Their Experiments and Comments}
 \end{document}
