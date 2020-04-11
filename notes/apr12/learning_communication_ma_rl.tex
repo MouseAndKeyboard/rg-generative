@@ -45,9 +45,9 @@
         
     \paragraph{Why partially observable?} There is a strong incentive to communicate in a multi agent environment if the the true state is not fully known to an agent.
 
-    \subsection{Architecture}
+    \subsection{Solutions}
 
-    \paragraph{} They discuss two architectures for enabling communication between agents:
+    \paragraph{} They discuss two types of solutions for enabling communication between agents:
     \begin{enumerate}
         \item[RIAL] \emph{Reinforced Inter-Agent Learning}
         \item[DIAL] \emph{Differentiable Inter-Agent Learning}
@@ -123,8 +123,18 @@
     \paragraph{Important note}
     Because during centralised learning the DRU is differentiable, the gradient term for $m$ is the backpropagated error from the recipient of the message to the sender.
     
+    \paragraph{Why add the noise?} It "encourages" the model to naturally learn to "discretise" messages during training. This is because if one agent wants to clearly communicate a message $m^a_t$ should either be very high or very low (think: 1 or 0) otherwise after noise is applied the output may be unclear.
+    \begin{enumerate}
+        \item add noise to the message $m^a_t$ 
+        \item apply logistic function to noised message $\mathcal{N}(m^a_t, \sigma)$
+        \item send the result $\text{Logistic}(\mathcal{N}(m^a_t, \sigma))$
+    \end{enumerate}
+
+    \paragraph{} If you consider that input values of $m^a_t$ which are close to 0 will output a highly uncertain value (because the noise could have a large impact on the output)
+
+    \includegraphics[width=12cm]{fig2.png}
+    \includegraphics[width=12cm]{fig3.png}
     \section{Their Experiments and Comments}
 
-    
 
 \end{document}
