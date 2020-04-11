@@ -3,7 +3,7 @@
 \author{Michael N.\thanks{paper: https://arxiv.org/abs/1605.06676}}
 \date{\today}
 \usepackage{graphicx}
-\usepackage{amsfonts}
+\usepackage{amsmath}
 
 \begin{document}
     \maketitle
@@ -42,6 +42,8 @@
         \item[end-to-end deep RL] A single neural network architecture. (as opposed to multiple neural networks)
     \end{enumerate}
         
+    \paragraph{Why partially observable?} There is a strong incentive to communicate in a multi agent environment if the the true state is not fully known to an agent.
+
     \subsection{Architecture}
 
     \paragraph{} They discuss two architectures for enabling communication between agents:
@@ -71,14 +73,25 @@
 
     \subsection{Notation}
     \begin{enumerate}
-        \item[action at time $t$] $u_t \in U$
-        \item[global (underlying) state] $s_t$ 
-        \item[action by agent $a$ at time $t$] $u^a_t$
-        \item[shared team reward] $r_t$
-        \item[what the agent observes] $o_t$
-        \item[Q-functon with internal state] $Q(o_t, h_{t-1}, u)$    
+        \item[$r_t$] Shared team reward
+        \item[$u^a_t \in U$] Environment action
+        \item[$m^a_t \in M$] Communication action
+        \item[$s_t$] Global (underlying) state
+        \item[$o^a_t$] What the agent observes
+        \item[$Q(o_t, h_{t-1}, u)$] Q-functon with internal state
     \end{enumerate}
 
+    \subsection{Setting}
+    \paragraph{rewards}All agents seek to maximise $R_t$ as reward is shared.
+    \paragraph{actions} Each time step $t$, two actions are picked
+    \begin{enumerate}
+        \item[environment action] Directly impacts the environment (think: traditional action such as moving)
+        \item[communicaton action] A "binary" vector which is observed by other agents but has no direct impact on reward: $\begin{bmatrix}0 & 1 & 0 & 0 & 1 & 1\end{bmatrix}^T$
+    \end{enumerate}
+    \paragraph{states} The environment is partially observable, each agent is able to make observations $o_t^a$ which are correlated with the markov state $s_t$
 
+    \subsection{How to build}
+
+    
     \section{Their Experiments and Comments}
 \end{document}
