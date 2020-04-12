@@ -53,7 +53,7 @@
     \end{itemize}
 
     What is \emph{it}?
-    All of the discussed techniques discussed so far fail pitifully (or are not great) at these tasks
+    All of the techniques discussed so far fail pitifully (or are not great) at these tasks
 
     \paragraph{What's needed?} Perhaps some mechanism which relates tokens between each other directly...
 
@@ -69,7 +69,37 @@
     \subsubsection{Dot product attention}
     This is the vanilla way to do attention.
 
+    \paragraph{There are 3 inputs into an attention algorithim}
+    \begin{enumerate}
+        \item[Key $K$] $n$ vectors* of dimension $d_K$ 
+        \item[Value $V$] $n$ vectors* of dimension $d_V$ 
+        \item[Query $Q$] Vector of dimension $d_Q \equiv d_K$
+    \end{enumerate}
+    *These are matrices in reality.
+
+    \paragraph{What do we do?} 
+    \begin{enumerate}
+        \item Each Key is associated with a Value. (think: dictionary)
+        \item We need to find the similarity between our Query and each Key
+        \item Multiply each Value by the corresponding similarity which we just calculated between the Query and Key
+        \item Each weighted Value is then summed.
+        \item Output the result
+    \end{enumerate}
+
+    \paragraph{Dot product reminder} The dot-product between two vectors: 
+    $$\vec{A} \cdot \vec{B} = |A||B|\cos{\theta}$$
     
+    When the two vectors are orthogonal $\cos(\frac{\pi}{2}) = 0$ and therefore the total goes to 0.
+    When they are similar (smaller angle between them) $\cos(0) = 1$ and the resulting product will be higher.
+
+    \paragraph{How does this relate to attention?} Remember that we want to compute the similarity between the single Query and the Key matrix. Based on what was just discussed, we can compute the dot product. We must also divide by a regularizer to account for large magnitudes at higher dimensions.
+
+    $$\frac{QK^T}{\sqrt{d_K}}$$
+
+    \paragraph{Adding Values} Now that we have the similarity metric between the query and keys we apply the softmax function over the resulting vector and multiply the result by the Value matrix.
+
+    $$A(Q,K,V) = \text{softmax} \left ( \right)$$
+
 
     \section{Core content}
 
