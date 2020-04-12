@@ -12,12 +12,26 @@
     
     \paragraph{Firstly} As the name suggests, the paper deals with "transformation" tasks such as, among other things, language models (think gpt-2) and machine translation.
 
+    \subsection{Limitations of previous methods}
     \paragraph{RNNs, LSTMs and GRUs} suffer because they are not parallelizable, struggle when they need to maintain long-distance relationships and some of their use-cases in seq-to-seq could be seen as \emph{immoral} (*gasp!*). Are there better solutions?
 
-    \subsection{}
+    \subsubsection{Parallelizable}
+    \paragraph{Recurrent models} tend to operate by taking the history of previously generated tokens and predicting the next one conditioned on that history:
+    $$p(t_n|t_{n-1}, t_{n-2}, \cdots, t_1, t_0)$$
 
+    \paragraph{} By this definition we can see that if you want to predict 100 tokens, e.g. 100 words, you'll have to follow this sequential process: 
+    \begin{enumerate}
+        \item predict the first token
+        \item predict the next conditioned on the first
+        \item predict the next conditioned on the previous two
+        \item etc x100.
+    \end{enumerate}
+
+    \paragraph{If you wanted to generate} a massive $n$ tokens it will take you $O(n)$ time.
 
     \section{Core content}
+
+    
 
     \section{Their Experiments and Comments}
 
