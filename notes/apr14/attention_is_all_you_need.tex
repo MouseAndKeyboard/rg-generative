@@ -145,8 +145,12 @@
         \end{itemize}
     \end{enumerate}
     \subsection{Inputs}
+
+    \subsubsection{"Inputs"}
+    \paragraph{} The literal sequence of tokens which will be processed. For MT this might be an english sentence, e.g. "Hello World"
+
     \subsubsection{Embeddings}
-    Words are embedded using some method (not really important). E.g. the two words "Hello World" my be encoded in the following two vectors (details not necessary).
+    \paragraph{} Words are embedded using some method (not really important). E.g. the two words "Hello World" my be encoded in the following two vectors (details not necessary).
     \[ \text{Hello} = \begin{bmatrix}
         0 & 0.2 & 0.8 & 0.3
     \end{bmatrix} \]
@@ -154,8 +158,19 @@
         0.4 & 0.4 & 0.1 & 0.6
     \end{bmatrix} \]
 
-    \subsubsection{Inputs}
-    
+    \subsubsection{Positional encodings}
+    \paragraph{} Because attention networks don't "see" position and therefore the distance between tokens, we need to explicitly add the token's position information.
+    \paragraph{} They do this by encoding position using a number of sine waves and then finding the values of each sine wave evaluated at the token's position.
+    For example: the token at position 1 might have a position embedding which looks like:
+    \[ \begin{bmatrix}
+        0.84 & 0.33 & 0.2 & 0.14
+    \end{bmatrix} \]
+
+    \paragraph{} From what I can tell, this value is added elementwise with the word embedding.
+
+    Example of sine curves (values are not true to form)
+
+    \includegraphics[width=10.0cm]{fig5.png}
 
     \subsection{Self-Attention}
     \paragraph{} In the architecture, self-attention is used, inputs seemingly are converted into Keys, Values and Queries. What does this mean!?
