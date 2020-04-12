@@ -3,6 +3,7 @@
 \author{Michael N.\thanks{paper: https://arxiv.org/abs/1706.03762}}
 \date{\today}
 \usepackage{graphicx}
+\usepackage{amsmath}
 
 
 \begin{document}
@@ -94,15 +95,20 @@
 
     \paragraph{How does this relate to attention?} Remember that we want to compute the similarity between the single Query and the Key matrix. Based on what was just discussed, we can compute the dot product. We must also divide by a regularizer to account for large magnitudes at higher dimensions.
 
-    $$\frac{QK^T}{\sqrt{d_K}}$$
+    \[ \frac{QK^T}{\sqrt{d_K}} \]
 
     \paragraph{Adding Values} Now that we have the similarity metric between the query and keys we apply the softmax function over the resulting vector and multiply the result by the Value matrix.
 
-    $$A(Q,K,V) = \text{softmax} \left ( \right)$$
+    \[ A(Q,K,V) = \text{softmax} \left ( \frac{QK^T}{\sqrt{d_K}} \right) V \]
 
+    \begin{center}
+        \includegraphics[scale=0.5]{fig3.png}
+    \end{center}
 
     \section{Core content}
 
+    \subsection{Architecture}
+    
 
 
     \section{Their Experiments and Comments}
