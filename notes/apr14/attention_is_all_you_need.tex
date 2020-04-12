@@ -27,11 +27,20 @@
         \item etc x100.
     \end{enumerate}
 
-    \paragraph{If you wanted to generate} a massive $n$ tokens it will take you $O(n)$ time.
+    \paragraph{If you wanted to generate} a massive $n$ tokens it will take you $O(n)$ time, and there's no way to parallelize this operation.
+
+    \subsubsection{Long distance relationships}
+    
+    \paragraph{The vanishing gradient problem} is the problem with RNNs and to a lesser extent LSTMs and GRUs that inputs from many time-steps ago become "diluted" and "lost" amongst newer inputs.
+    \paragraph{} This is a concerning issue with NLP and many seq-to-seq tasks in general because, using language as an example, contextual information such as the conversation topic may only be mentioned once at an early time in a sentence. For example, consider this current section, an RNN would have a hard time storing the information that the current topic is the "Limitations of previous methods" because it happened very early on.
+
+    \subsubsection{Immorality}
+
+    \paragraph{Is position that important?} RNNs, LSTMs, GRUs and even non-recurrent methods such as Wavenet (which uses CNNs) all capture the spacial relationships of tokens well, e.g. (using language models) they all are able to predict the next word by understanding how the frequency of a word relates to 
 
     \section{Core content}
 
-    
+
 
     \section{Their Experiments and Comments}
 
