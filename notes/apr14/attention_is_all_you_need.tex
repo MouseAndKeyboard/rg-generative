@@ -190,7 +190,31 @@
     \subsubsection{Intuition?}
     You generate an output of values which are some hidden representation of the input X which (after training) better codes for relationships between elements as the output "attends" to the whole input $X$.
 
-    \subsection{Multi-Head Attention}
+    \subsection{Multi-Head Self-Attention}
+
+    \begin{center}
+        \includegraphics[scale=0.2]{fig6.png}
+    \end{center}
+
+    \subsubsection{Purpose}
+
+    In regular attention we softmax over the weighted average of our result vectors. This process is lossy because...
+    %TODO: Write purpose% 
+
+    \begin{quote}
+        Multi-headed attention allows the model to jointly attend to information from different representation subspaces at different positions.
+    \end{quote} 
+
+    \subsubsection{How it's made}
+    We linearly project our input, $X$, $h$ times (for queries, keys and values) with different parameter matrices each time.
+
+    \[ X_i \times W_i^K = K_i\]
+    \[ X_i \times W_i^Q = Q_i \]
+    \[ X_i \times W_i^V = V_i \]
+
+    \paragraph{From the paper} Instead of performing a single attention function with
+    \linebreak
+    $d_{model}$-dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values $h$ times with different, learned linear projections to $d_k$, $d_k$ and $d_v$ dimensions respectively.
 
     \section{Their Experiments and Comments}
 
