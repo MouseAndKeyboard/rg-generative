@@ -221,8 +221,17 @@
     \linebreak
     $d_{model}$-dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values $h$ times with different, learned linear projections to $d_k$, $d_k$ and $d_v$ dimensions respectively.
 
-    \subsection{Multi-Head Self-Attention}
+    \subsection{Masked Multi-Head Self-Attention}
+    \subsubsection{What's the purpose of masking?}
+    \paragraph{To preserve the autoregressive properties of the decoder.}
+    If you have a sequence of tokens and you would like to perform self attention, how do you prevent the attention system from looking ahead at tokens which it shouldn't.
+    \paragraph{Example} Translating English to German: 
+    "I'm a zoomer" $\mapsto$ "Ich bin ein Zoomer."
+    \paragraph{} If your decoder is predicting the final token in the sequence "zoomer", the decoder should not be able to attend to the (not yet generated) token "Zoomer". 
+
+
 
     \section{Their Experiments and Comments}
+
 
 \end{document}
