@@ -172,10 +172,25 @@
 
     \includegraphics[width=10.0cm]{fig5.png}
 
-    \subsection{Self-Attention}
-    \paragraph{} In the architecture, self-attention is used, inputs seemingly are converted into Keys, Values and Queries. What does this mean!?
-    \paragraph{The answer is quite simple really...} 
+    \subsection{Encoder}
+    \subsubsection{What does the encoder do?}
+    It converts some input sequence into a hidden representation 
 
+    \subsection{Self-Attention}
+    \subsubsection{What is it?}
+
+    \paragraph{} In the architecture, self-attention is used, inputs seemingly are converted into Keys, Values \textbf{and} Queries. What does this mean!?
+    \paragraph{The answer is quite simple really...} The input matrix $X$ is multiplied by 3 weight matrices:
+    \[ X \times W^Q = Q \]
+    \[ X \times W^K = K \]
+    \[ X \times W^V = V \]
+
+    These weight matrices are parameters to be learned by the network.
+
+    \subsubsection{Intuition?}
+    You generate an output of values which are some hidden representation of the input X which (after training) better codes for relationships between elements as the output "attends" to the whole input $X$.
+
+    \subsection{Multi-Head Attention}
 
     \section{Their Experiments and Comments}
 
