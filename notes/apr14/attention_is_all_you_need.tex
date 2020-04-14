@@ -229,9 +229,14 @@
     "I'm a zoomer" $\mapsto$ "Ich bin ein Zoomer."
     \paragraph{} If your decoder is predicting the final token in the sequence "zoomer", the decoder should not be able to attend to the (not yet generated) token "Zoomer". 
 
-
+    \subsubsection{How to implement masking}
+    We will set the values of illegal connections to $-\infty$ before they are processed by the softmax function. This ensures they are given no consideration/weight.
+    \[ A(Q,K,V) = \text{softmax} \left ([a, b, c, -\infty] \right) V \] 
+    
+    \subsection{Point of residual connections}
+    So every position can attend over all other positions. Everything is interconnected man.
 
     \section{Their Experiments and Comments}
-
+    it does well at some stuff
 
 \end{document}
