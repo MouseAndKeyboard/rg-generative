@@ -1,0 +1,47 @@
+\documentclass{article}
+\title{Notes for: Trust Region Policy Optimization}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+
+\begin{document}
+
+\maketitle
+
+\section[high]{High Level and Motivation}
+\label{cha:high-level-motiv}
+
+\subsection[motivation]{Motivation}
+\label{part:motivation}
+
+\paragraph[example]{Example} Basically, it's pretty well known that RL can be quite shaky at the best of times. When using policy gradient approaches it's very common that your adjustments to \(\theta\), your policy parameters, will cause your agent to suddenly perform really bad.
+
+\paragraph{Consider this:}
+You're training an agent and it's got an okay policy, it is able to sample states by following this policy and it can slowly refine said policy. Suddenly, something bad happens and the policy optimization algorithm (e.g. SDG) over-corrects to this environmental change.
+
+Now your policy is performing poorly and is sampling its observations from a new, really bad set of states. It's going to be pretty hard for this agent to recover. 
+
+\paragraph{Problem:} With traditional policy gradient optimization algorithms, such as SGD, we can sometimes over-step and change our policy too much resulting in bad outcomes. What if there was a way to limit step sizes (non-arbitrarily) such that you won't have this happen?
+
+\subsection[overview]{Overview}
+\label{part:overview}
+
+\section[high]{Core content}
+
+\subsection{Policy gradients}
+\[\hat{g} = \hat{\mathbb{E}}_t \left [ \nabla_\theta \log{\pi_\theta} (a_t|s_t) \hat{A_t}  \right] \]
+
+where the ``hat'' simply means that our expectation is based of an average of a bunch of time steps.
+
+And we can write down a loss function s.t. differentiating that loss function will give us the policy gradient formula:
+\[ L^{PG}(\theta) = \hat{\mathbb{E}} \left[  \log{\pi_\theta} (a_t|s_t) \hat{A_t} \right] \]
+
+This is just the log probability of the advantage estimate.
+
+\paragraph{Hypothetical} Say we fully optimize this loss. If our advantage is positive the probability for that action gets optimized to 1, and if the advantage is negative the probability of that action gets optimized to 0
+. This is \emph{problematic} because our term \(\hat{A_t}\) is noisy, if we just get unlucky and \(\hat{A_t}\) isn't perfect then we'll drastically change our policy - this will probably make the policy worse.
+
+\section[high]{Applications}
+The application of TRPO is to be improved to PPO. 
+
+\end{document}
