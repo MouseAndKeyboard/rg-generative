@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{amsfonts}
+\usepackage{xcolor}
 
 \begin{document}
 
@@ -26,6 +27,9 @@ Now your policy is performing poorly and is sampling its observations from a new
 \subsection[overview]{Overview}
 \label{part:overview}
 
+Trust region policy optimization (TRPO), is a type of optimisation algorithm which works by taking very careful, small, updates to the policy.  
+
+
 \section[high]{Core content}
 
 \subsection{Policy gradients}
@@ -41,7 +45,83 @@ This is just the log probability of the advantage estimate.
 \paragraph{Hypothetical} Say we fully optimize this loss. If our advantage is positive the probability for that action gets optimized to 1, and if the advantage is negative the probability of that action gets optimized to 0
 . This is \emph{problematic} because our term \(\hat{A_t}\) is noisy, if we just get unlucky and \(\hat{A_t}\) isn't perfect then we'll drastically change our policy - this will probably make the policy worse.
 
+\begin{center}
+    put a pin in that
+\end{center}
+
+\subsubsection{Some quick CALC1}
+\[
+    \textcolor{blue} { \frac{d}{dx} } \textcolor{red}{\ln}  {f(x)} = \frac{\frac{d}{dx}f(x)}{f(x)}   
+\]
+Give it some gains:
+\[
+    \textcolor{blue} { \nabla_\theta } \textcolor{red} {\ln}{f(\theta)}  = \frac{\nabla_\theta f(\theta)}{f(\theta)}   
+\]
+Remember our policy gradient function contains this term:
+\[
+    \textcolor{blue} { \nabla_\theta } \textcolor{red} {\log}{\pi_\theta} (a_t|s_t)
+\]
+So what if:
+\[
+    L_{\theta_{old}}^{IS} (\theta) = \hat{\mathbb{E}} \left[  \frac{{\pi_\theta} (a_t|s_t)}{{\pi_{\theta_{old}}} (a_t|s_t)} \hat{A_t} \right]
+\]
+Differentiating that ratio between policies we will get the same gradient as the \(L^{PG}(\theta)\) loss function.
+
+\subsubsection{Importance Sampling}
+It's the idea that we can find the expectation under one distribution even though our samples are from another distribution.
+
+\[
+    \mathbb{E}_{s_t \sim \pi_{\theta_{old}}, a_t \sim \pi_{\theta_{old}} } \left [ \frac{{\pi_\theta} (a_t|s_t)}{{\pi_{\theta_{old}}} (a_t|s_t)} A^{\pi_{\theta_{old}}} (s,a) \right]
+\]
+
+Here we have samples from \( \pi_{\theta_{old}} \) and we want to evaluate these samples using our new policy \( \pi_\theta \) 
+
+As long as the gradient of the loss function is relatively close to this expectation we can make policy improvements based on this importance sampling method.
+
+We can simplify this notation by writing \(A^{\pi_{\theta_{old}}} (s,a)\) simply as \( \hat{A_t} \)
+
+\[
+    \hat{\mathbb{E}}_{t} \left [ \frac{{\pi_\theta} (a_t|s_t)}{{\pi_{\theta_{old}}} (a_t|s_t)} \hat{A_t} \right]
+\]
+
+where the “hat” simply means that our expectation is based of an average of a bunch of time steps rather than some perfect expectation value.
+
+\subsubsection{Trust regions}
+
+\paragraph{Remember:} \( \hat{A_t} \) (when following \( \theta \)) is only truthfully known in retrospect. We can estimate \( \hat{A_t} \) during execution but the true advantage of that action can only be known with hindsight. (if this wasn't true, then we surely would have god-like AI by now)
+
+\paragraph{At a high-ish level}, when you want to update your policy parameters \( \theta \), a trust region represents some "safe range" where the update won't cause any drastic harm to the policy.
+
+\paragraph{As it stands,} we want to get the most advantage at each state, i.e. picking actions which are better than others. So our new \( \theta \) should be selected such that:
+
+(we haven't introduced trust regions yet)
+\[
+    \max_\theta \;\; \hat{\mathbb{E}}_{t} \left [ \frac{{\pi_\theta} (a_t|s_t)}{{\pi_{\theta_{old}}} (a_t|s_t)} \hat{A_t} \right]
+\]
+
+As discussed before, according to this formulation, for this to be true the agent should ``overfit'' to each advantage value it sees. This comes with all of the awful instability side effects. This can be solved by adding a trust region\dots
+
+\paragraph{What do we want?} We want to make \( \pi_\theta \) change slightly but remain relatively close to \( \pi_{\theta_{old}} \), this way we won't, metaphorically, kill our agent by accidentally overfitting to a noisy advantage value.
+
+\paragraph{What is \( \pi_{\text{parameter}}(\cdot | s) \)} It is a probability distribution for selecting all the different actions given a state when following a policy defined by some parameters.
+
+\paragraph{KL Divergence} We need a way to compare how close two distributions are, \( \pi_\theta(\cdot | s) \) and \( \pi_{\theta_{old}}(\cdot | s) \). Thankfully the KL divergence measures something akin to the distance between two distributions. The notation for the KL divergence between two distributions is \(KL[a, b]\) 
+
+\paragraph{Trust region definition}
+\begin{align*}
+    \max_\theta \;\; &\hat{\mathbb{E}}_{t} \left [ \frac{{\pi_\theta} (a_t|s_t)}{{\pi_{\theta_{old}}} (a_t|s_t)} \hat{A_t} \right] \\
+    \text{subject to} \;\; &\hat{\mathbb{E}}_{t} \left [ KL \left[  \pi_{\theta_{old}} (\cdot|s_t), \pi_{\theta} (\cdot|s_t)\right] \right] \le \delta
+\end{align*}
+
+We tune \(\delta\), a hyperparameter, which is the size of the trust region.
+
+An alternative formulation also exists, where instead of having a constraint, we include a penalty:
+\[
+    \max_\theta \;\; \hat{\mathbb{E}}_{t} \left [ \frac{{\pi_\theta} (a_t|s_t)}{{\pi_{\theta_{old}}} (a_t|s_t)} \hat{A_t} \right] - \beta \hat{\mathbb{E}}_{t} \left [ KL \left[  \pi_{\theta_{old}} (\cdot|s_t), \pi_{\theta} (\cdot|s_t)\right] \right]
+\]
+Basically, for some optimum point in the \(\delta\) constraint-based formulation, there also exists a formulation using a penalty term which has the same optimum point. 
+
 \section[high]{Applications}
 The application of TRPO is to be improved to PPO. 
-
+(it also does good on MuJoCo environments)
 \end{document}
