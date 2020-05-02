@@ -92,11 +92,41 @@ It so happens that it's \emph{really} hard to pick a \(\beta\) that works well o
 
 \paragraph{At each update step we must consider 3 things:}
 \begin{enumerate}
-    \item What was the probability of selecting this action AT THE TIME OF SELECTION (under the \textbf{old policy})
-    \item What is the probability of selecting this action UNDER THE \textbf{NEW POLICY}
-    \item The \textbf{advantage estimate} of that action taken (this is computed right after taking this action by, typically, a neural network)
+    \item What was the probability of selecting this action AT THE TIME OF SELECTION (under the \textbf{old policy \( \pi_{\theta_{\text{old}}} \)} )
+    \item What is the probability of selecting this action UNDER THE \textbf{new policy \( \pi_\theta\) } 
+    \item The \textbf{advantage estimate \( \hat{A}_t \)} of that action taken (this is computed right after taking this action by, typically, a neural network)
 \end{enumerate}
 
+\subsubsection{Why do we need the probabilities of taking the action under the old and new policies?}
+Because we want to compute some sort of measure of how different the decision of the new policy is to the old policy. We can do this by letting:
+\[r_t(\theta) = \frac{\pi_\theta (a_t | s_t)}{\pi_{\theta_{\text{old}}} (a_t | s_t)}\]
+\[\Rightarrow r(\theta_\text{old}) = 1\]
 
+\paragraph{Let's linger on this} If the new policy will select the action with a much greater probability than the old policy, i.e. \(\pi_\theta (a_t | s_t) > \pi_{\theta_{\text{old}}} (a_t | s_t)\) then \(r(\theta)\) will be \textbf{greater than 1}. \\ The opposite is also true: \(\pi_\theta (a_t | s_t) < \pi_{\theta_{\text{old}}} (a_t | s_t)\) then \(r(\theta)\) will be \textbf{less than 1}.
 
+It's worth noting that this is not the same as the computing the difference between policy distributions or something like that (therefore no KL divergences are necessary)\textbf{*}. We are simply measuring the probability ratio of one action under one policy over another policy.
+
+\paragraph{*}This CAN be replaced by a KL divergence term, but then we're stepping awfully close to TRPO. They also performed empirical tests and showed that the KL divergence stuff worsens performance (thank god - we don't need to deal with that).
+
+\subsubsection{Why do we need the advantage estimate of the action taken?}
+
+At each time step we need access to what the estimated advantage was. For example, while running the policy we may follow the following sequence:
+\begin{enumerate}
+    \item Observe the environment
+    \item \emph{Estimate advantage of previous action} 
+    \item Select action based on observation according to the policy
+    \item Take the action selected 
+    \item Make new observation
+    \item \emph{Estimate the advantage of the action we just took. We can use a neural network for this.}
+\end{enumerate}
+
+We need these estimates because \textbf{this is what we will use to update the policy}. The advantage estimator is what is updated based on empirical evidence, i.e. this is what is actually updated based on rewards observed.
+
+\subsubsection{Putting the pieces together}
+
+If we are going to update our policy drastically we need a good reason. Good reasons include:
+\begin{enumerate}
+    \item \(r_t(\theta) < 1 \) (action is rarer in the new policy) and our action estimation says that this action is good. (we can be safe in knowing that we may make the new policy worse, but only up to the level of the old policy)
+    \item \(r_t(\theta) > 1 \) (action is more frequent in the new policy) and our action estimation says that this action is bad. (we can be safe in knowing that we may make the new policy worse, but only up to the level of the old policy)
+\end{enumerate}
 \end{document}
