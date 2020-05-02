@@ -63,6 +63,20 @@ E.g. the standard gradient estimator looks like:
 \paragraph{We construct} an objective function which has a gradient of the policy gradient estimator. E.g. \(\hat{g}\) can be obtained by differentiating:
 \[L^{PG} (\theta) = \hat{\mathbb{E}}_t \left [ \log\pi_\theta (a_t | s_t) \hat{A}_t \right] \]
 
+\subsection{TRPO}
 
+TRPO is both really useful and also really icky at the same time. This is primarily due to its difficult implementation details. To summarise TRPO, they propose optimizing the following constrained surrogate objective:
+
+\begin{align*}
+    \underset{\theta}{\text{maximise}} \;\; &\hat{\mathbb{E}}_{t} \left [ \frac{{\pi_\theta} (a_t|s_t)}{{\pi_{\theta_{old}}} (a_t|s_t)} \hat{A_t} \right] \\
+    \text{subject to} \;\; &\hat{\mathbb{E}}_{t} \left [ KL \left[  \pi_{\theta_{old}} (\cdot|s_t), \pi_{\theta} (\cdot|s_t)\right] \right] \le \delta
+\end{align*}
+
+In the TRPO paper they also show you can actually use a penalty term instead of a constraint:
+\[
+    \underset{\theta}{\text{maximise}} \;\; \hat{\mathbb{E}}_{t} \left [ \frac{{\pi_\theta} (a_t|s_t)}{{\pi_{\theta_{old}}} (a_t|s_t)} \hat{A_t} \right] - \beta \hat{\mathbb{E}}_{t} \left [ KL \left[  \pi_{\theta_{old}} (\cdot|s_t), \pi_{\theta} (\cdot|s_t)\right] \right]
+\]
+
+It so happens that it's \emph{really} hard to pick a \(\beta\) that works well on different problems. This is why a hard constraint tends to be used. 
 
 \end{document}
