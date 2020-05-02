@@ -3,6 +3,10 @@
 \author{Michael (aka Lisb0n).}
 \date{\today}
 \usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{xcolor}
 
 \begin{document}
 \maketitle
@@ -41,6 +45,23 @@ It's worth noting that PPO also \textbf{beats TRPO} empirically on \emph{most} t
 \paragraph{Batch training?} One of the key benefits of the PPO algorithm (alongside matching TRPO's special "trust region" ideas [discussed later]) is that PPO is highly robust against "overfitting" to policy changes per se.  This means that you can collect a lot of data from one policy and then use that for optimization and be A-OK. 
 
 \section{Body}
+
+\subsection{Old methods}
+
+\subsubsection{Policy Gradient}
+
+This is the most basic method. It works by computing an estimator of the policy gradient (policy parameters w.r.t. expected return) and then attempting to find the maximum of this using a gradient ascent algorithm.
+
+E.g. the standard gradient estimator looks like:
+\[ \hat{g} = \textcolor{red}{\hat{\mathbb{E}}} \left [ \nabla_\theta \log \textcolor{blue}{\pi_\theta (a_t | s_t)} \textcolor{violet}{\hat{A}_t} \right ] \]
+
+\begin{itemize}
+    \item[\textcolor{blue}{\(\pi_\theta\)}] stochastic policy. Think: neural network outputting an action probability.
+    \item[\textcolor{red}{\(\hat{\mathbb{Ep[]}}\)}] \emph{Empirical} average over a finite batch of samples.
+    \item[\textcolor{violet}{\(\hat{A}_t\)}] Noisy estimate of the advantage function at time \(t\). Think: neural network outputting an advantage estimate.
+\end{itemize}
+\paragraph{We construct} an objective function which has a gradient of the policy gradient estimator. E.g. \(\hat{g}\) can be obtained by differentiating:
+\[L^{PG} (\theta) = \hat{\mathbb{E}}_t \left [ \log\pi_\theta (a_t | s_t) \hat{A}_t \right] \]
 
 
 
