@@ -92,12 +92,12 @@ It so happens that it's \emph{really} hard to pick a \(\beta\) that works well o
 
 \paragraph{At each update step we must consider 3 things:}
 \begin{enumerate}
-    \item What was the probability of selecting this action AT THE TIME OF SELECTION (under the \textbf{old policy \( \pi_{\theta_{\text{old}}} \)} )
-    \item What is the probability of selecting this action UNDER THE \textbf{new policy \( \pi_\theta\) } 
-    \item The \textbf{advantage estimate \( \hat{A}_t \)} of that action taken (this is computed right after taking this action by, typically, a neural network)
+    \item \textcolor{blue}{ What was the probability of selecting this action AT THE TIME OF SELECTION (under the \textbf{old policy \( \pi_{\theta_{\text{old}}} \)} ) }
+    \item \textcolor{blue}{What is the probability of selecting this action UNDER THE \textbf{new policy \( \pi_\theta\) } }
+    \item \textcolor{violet}{The \textbf{advantage estimate \( \hat{A}_t \)} of that action taken (this is computed right after taking this action by, typically, a neural network)}
 \end{enumerate}
 
-\subsubsection{Why do we need the probabilities of taking the action under the old and new policies?}
+\textcolor{blue}{\subsubsection{Why do we need the probabilities of taking the action under the old and new policies?}}
 Because we want to compute some sort of measure of how different the decision of the new policy is to the old policy. We can do this by letting:
 \[r_t(\theta) = \frac{\pi_\theta (a_t | s_t)}{\pi_{\theta_{\text{old}}} (a_t | s_t)}\]
 \[\Rightarrow r(\theta_\text{old}) = 1\]
@@ -108,21 +108,48 @@ It's worth noting that this is not the same as the computing the difference betw
 
 \paragraph{*}This CAN be replaced by a KL divergence term, but then we're stepping awfully close to TRPO. They also performed empirical tests and showed that the KL divergence stuff worsens performance (thank god - we don't need to deal with that).
 
-\subsubsection{Why do we need the advantage estimate of the action taken?}
+\textcolor{violet}{\subsubsection{Why do we need the advantage estimate of the action taken?}}
 
 At each time step we need access to what the estimated advantage was. For example, while running the policy we may follow the following sequence:
 \begin{enumerate}
     \item Observe the environment
-    \item \emph{Estimate advantage of previous action} 
+    \item \emph{Estimate advantage of previous action \(\hat{A}_{n-1}\) and store it somewhere safe} 
     \item Select action based on observation according to the policy
     \item Take the action selected 
     \item Make new observation
-    \item \emph{Estimate the advantage of the action we just took. We can use a neural network for this.}
+    \item \emph{Estimate the advantage of the action \(\hat{A}_{n}\) we just took and store it somewhere safe.} 
 \end{enumerate}
+
+Note: we use a neural network to estimate \(\hat{A}_{t}\), because neural networks are imperfect/noisy our Advantage estimates will be imperfect/noisy too. 
 
 We need these estimates because \textbf{this is what we will use to update the policy}. The advantage estimator is what is updated based on empirical evidence, i.e. this is what is actually updated based on rewards observed.
 
+When \(\hat{A}_{t}\) is positive, the action selected was better than expected.
+When \(\hat{A}_{t}\) is negative, the action selected was worse than expected.
+
 \subsubsection{Putting the pieces together}
+
+There are 4 interesting circumstances when updating our model:
+
+
+\begin{center}
+    \begin{tabular}{ c|c|c| } 
+    & \(\hat{A}_{t} > 0\)  & \(\hat{A}_{t} < 0\)  \\
+    \hline
+    \(r_t (\theta) > 1 \) & CASE 1  & CASE 2 \\
+    \hline
+    \(r_t (\theta) < 1 \) & CASE 3  & CASE 4
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+    \item[CASE 1] Under the new policy we take this action more frequently and the advantage is positive! This suggests the policy should take this action EVEN MORE!
+    \item[CASE 2] Under the new policy we take this action more frequently but the advantage is negative so we should take this action less.
+    \item[CASE 3] Under the new policy we take this action less frequently but the advantage is positive so we should take the action more.
+    \item[CASE 4] Under the new policy we take the action less frequently and the advantage function is negative! This suggests the policy should take this action EVEN LESS!
+\end{itemize}
+
+    
 
 If we are going to update our policy drastically we need a good reason. Good reasons include:
 \begin{enumerate}
