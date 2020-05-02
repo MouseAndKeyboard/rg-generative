@@ -1,13 +1,35 @@
 \documentclass{article}
-\title{Notes for: Proximal Policy Optimization Algorithms}
-\author{Michael (aka Lisb0n). \thanks{paper: https://arxiv.org/abs/1707.06347}}
+\title{Notes for: Proximal Policy Optimization Algorithms\thanks{paper: https://arxiv.org/abs/1707.06347}}
+\author{Michael (aka Lisb0n).}
 \date{\today}
 \usepackage{graphicx}
 
 \begin{document}
 \maketitle
 
+\section{High Level and Motivations}
 
+\subsection{Motivational example}
+\begin{enumerate}
+    \item You're the proud owner of a RL-robot 9000 (it's a shiny new model and you've heard it's much better than those "control-robot 2000s") The RL-robot 9000 is very expensive (you've saved up the cash to buy this thing over the past 3 years!!)
+    \item The robot is tasked with collecting gold coins
+    \item The robot is generally quite successful at its task of coin collection, sometimes it finds coins on the street, sometimes if finds coins under the couch.
+    \item When the agent finds a gold coin you reward it with a treat to incentivise the robot to collect more coins in the future.
+    \item Every now and then the agent will pause and think about all the treats it received recently, it considers what it could do better next time to gain more treats.
+    \item You take your robot on a field-trip to the zoo to see the sites and perhaps find some more coins.
+    \item It knows that coins are often found around humans so it goes and searches under a few benches and looks at the floor amongst crowds of people. It finds a few coins, you give the robot its treat and it becomes more incentivised to search around people.
+    \item You go off to look at the flamingo enclosure and let your robot run free collecting coins.
+    \item A small while later your robot comes back with a unusually large sack of gold coins, you give the robot a funny look but provide it with its (large) reward, you carry on to the lizard enclosure and let the robot roam free again.
+    \item Some time passes while you are enjoy the sights of the different lizards and lizard-like creatures. You hear a sound from behind and turn to see that a police guard is carrying a now beat up version of your robot, the baton marks on the robot match the baton the guard is carrying. 
+    \item The guard explains that the robot was accosting people and demanding they empty their wallets or it would throw them into the lion pit. If you knew this was happening you absolutely would've put a stop to it.
+    
+\paragraph{A possible cause} The first time the robot returned with the sack of coins you unknowingly rewarded its action of demanding payment from people, importantly, this time, clearly the guards weren't watching. When placed in a similar circumstance, it thought back to last time \emph{my owner rewarded me BIG TIME last time when I accosted people, I'm going to start doing this at a larger scale!!} Unfortuantly for your robot, the guards noticed the trail of crying children and upset families and thus beat your robot to a pulp when it was captured.
+\paragraph{An alternate ending} If the guards spotted the robot the first time it accosted someone (it only did it once) they may have been more lenient and simply given the robot a light knock over the head (and thus the robot would quickly learnt to not accost people).
+\paragraph{A possible solution} If the agent had some limit to how its behaviour could change to attain more of reward after receiving a positive (or negative [although this isn't in this example]) reward it may have only accosted 2 people which may have made the guards more lenient (as opposed to the hundreds of people accosted in the example)
+
+\textbf{This is a motivating example, not actually what happens (although the solution is similar to what PPO aims to achieve).}
+
+\end{enumerate}
 
 
 
