@@ -82,6 +82,21 @@ In the TRPO paper they also show you can actually use a penalty term instead of 
 
 It so happens that it's \emph{really} hard to pick a \(\beta\) that works well on different problems. This is why a hard constraint tends to be used. 
 
+\subsection{Clipped Surrogate Objective: The Main Meal}
+\paragraph{If nothing else,} this is the part which is worth understanding. The ``clipped surrogate objective" is pretty much the entire PPO idea.
+\paragraph{This is also} the best place to ask questions (if you think you have any).
+
+\paragraph{How to come up with the idea of PPO yourself.} To help bring an intuition and rationale for the PPO algorithm I'll try to describe what you're looking for.
+
+\paragraph{Let's say} we've collected some samples from the environment under policy \( \pi_{\theta_{\text{old}}} \) and we now want to update/create a \( \pi_\theta\) according to these samples.
+
+\paragraph{At each update step we must consider 3 things:}
+\begin{enumerate}
+    \item What was the probability of selecting this action AT THE TIME OF SELECTION (under the \textbf{old policy})
+    \item What is the probability of selecting this action UNDER THE \textbf{NEW POLICY}
+    \item The \textbf{advantage estimate} of that action taken (this is computed right after taking this action by, typically, a neural network)
+\end{enumerate}
+
 
 
 \end{document}
