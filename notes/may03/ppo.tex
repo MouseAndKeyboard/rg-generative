@@ -39,6 +39,9 @@
 
 \paragraph{Proximal Policy Optimization} is, in essence, a unique objective function which your agent attempts to maximise. This is opposed to simply maximising your expected return as is done in normal policy gradient methods.
 
+Here's a spoiler of what we end up maximising:
+\[L_t^{\text{CLIP + VF + S}} (\theta) = \hat{\mathbb{E}} \left [ L_t^{\text{CLIP}}(\theta) - c_1 L_t^{\text{VF}} + c_2 S[\pi_\theta](s_t) \right] \]
+
 \paragraph{The main aims} of PPO were \textbf{not} to build a "better" or "more accurate" optimisation method or function. The primary driver for the development of PPO was to be a \textbf{simple to implement} alternative to TRPO (Trust Region Policy Optimization). \\ 
 It's worth noting that PPO also \textbf{beats TRPO} empirically on \emph{most} tasks. 
 
@@ -78,5 +81,7 @@ In the TRPO paper they also show you can actually use a penalty term instead of 
 \]
 
 It so happens that it's \emph{really} hard to pick a \(\beta\) that works well on different problems. This is why a hard constraint tends to be used. 
+
+
 
 \end{document}
