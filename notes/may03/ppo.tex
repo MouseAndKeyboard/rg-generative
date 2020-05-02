@@ -27,9 +27,20 @@
 \paragraph{An alternate ending} If the guards spotted the robot the first time it accosted someone (it only did it once) they may have been more lenient and simply given the robot a light knock over the head (and thus the robot would quickly learnt to not accost people).
 \paragraph{A possible solution} If the agent had some limit to how its behaviour could change to attain more of reward after receiving a positive (or negative [although this isn't in this example]) reward it may have only accosted 2 people which may have made the guards more lenient (as opposed to the hundreds of people accosted in the example)
 
-\textbf{This is a motivating example, not actually what happens (although the solution is similar to what PPO aims to achieve).}
+\textbf{This is a motivating example, not actually what happens. What's described here is what TRPO solves but PPO does too.} PPO also enables another key thing to do with enabling training over multiple epochs of minibatches. 
 
 \end{enumerate}
+
+\subsection{What is PPO?}
+
+\paragraph{Proximal Policy Optimization} is, in essence, a unique objective function which your agent attempts to maximise. This is opposed to simply maximising your expected return as is done in normal policy gradient methods.
+
+\paragraph{The main aims} of PPO were \textbf{not} to build a "better" or "more accurate" optimisation method or function. The primary driver for the development of PPO was to be a \textbf{simple to implement} alternative to TRPO (Trust Region Policy Optimization). \\ 
+It's worth noting that PPO also \textbf{beats TRPO} empirically on \emph{most} tasks. 
+
+\paragraph{Batch training?} One of the key benefits of the PPO algorithm (alongside matching TRPO's special "trust region" ideas [discussed later]) is that PPO is highly robust against "overfitting" to policy changes per se.  This means that you can collect a lot of data from one policy and then use that for optimization and be A-OK. 
+
+\section{Body}
 
 
 
