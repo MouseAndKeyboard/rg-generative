@@ -142,6 +142,8 @@ There are 4 interesting circumstances when updating our model:
 \end{tabular}
 \end{center}
 
+In TRPO, \(\hat{\mathbb{E}} \left [ r_t(\theta) \hat{A}_t \right]\) this is the objective we optimize for (ignoring the constraint). Therefore we'll use this as the method 
+
 \begin{itemize}
     \item[CASE 1] Under the new policy we take this action more frequently and the advantage is positive! This suggests the policy should take this action EVEN MORE!
     \item[CASE 2] Under the new policy we take this action more frequently but the advantage is negative so we should take this action less.
@@ -149,11 +151,30 @@ There are 4 interesting circumstances when updating our model:
     \item[CASE 4] Under the new policy we take the action less frequently and the advantage function is negative! This suggests the policy should take this action EVEN LESS!
 \end{itemize}
 
-    
+\paragraph{An insight} 2 of these cases make the new policy closer to the old policy while 2 drive the new policy further away. Can you identify which?\footnote{CASE 2 and 3 make the new policy closer to the old policy} While we do want the new policy to be different from the old policy (otherwise what's the point of training), we don't want it to get too far away (we might be ``overfitting" the new policy on the noisy advantage estimates).
 
-If we are going to update our policy drastically we need a good reason. Good reasons include:
-\begin{enumerate}
-    \item \(r_t(\theta) < 1 \) (action is rarer in the new policy) and our action estimation says that this action is good. (we can be safe in knowing that we may make the new policy worse, but only up to the level of the old policy)
-    \item \(r_t(\theta) > 1 \) (action is more frequent in the new policy) and our action estimation says that this action is bad. (we can be safe in knowing that we may make the new policy worse, but only up to the level of the old policy)
-\end{enumerate}
+\paragraph{What we need} is something which allows the new policy to drift closer to the old policy (we don't care about the potential performance loss) while limiting how far it can drift away from the old policy.
+
+\[
+    L^{\text{CLIP}} (\theta) = \hat{\mathbb{E}}_t \left [ \min(  r_t (\theta) \hat{A}_t , \text{clip}(r_t (\theta), 1 - \epsilon, 1 + \epsilon)\hat{A}_t ) \right]
+\]
+where \(\epsilon\) is a hyperparameter which is usually set to \(\approx 0.2\) It represents how ``far'' the new policy is allowed to drift away from the old policy.
+
+\paragraph{Math translation:}
+\paragraph{}remember:
+\[r_t(\theta) = \frac{\pi_\theta (a_t | s_t)}{\pi_{\theta_{\text{old}}} (a_t | s_t)}\]
+
+\paragraph{LET} \(\epsilon = 0.2\). Each cell value is the clipped objective:
+\begin{center}
+    \begin{tabular}{ c|c|c| } 
+    & \(\hat{A}_{t} > 0\)  & \(\hat{A}_{t} < 0\)  \\
+    \hline
+    \(r_t (\theta) \) is large & \(1.2 \times \hat{A}_t\)  & \(r_t(\theta) \times \hat{A}_t\)  \\
+    \hline
+    \(r_t (\theta) \) is small & \(r_t(\theta) \times \hat{A}_t\) & \(0.8 \times \hat{A}_t\) 
+\end{tabular}
+\end{center}
+    
+Hopefully you can see that this outcome satisfies what we wanted. 
+
 \end{document}
