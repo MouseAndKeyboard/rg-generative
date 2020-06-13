@@ -2,7 +2,7 @@
 \title{Notes for: Generative Adversarial Imitation Learning}
 \author{M. Nef. \thanks{paper: https://arxiv.org/pdf/1812.10613.pdf}}
 \date{\today}
-\usepackage{graphicx}
+\usepackage{amsmath}
 
 \begin{document}
 \maketitle
@@ -61,7 +61,8 @@ The IRL procedure which finds a cost function such that the expert outperforms a
 
 \[\tilde{c} \in IRL_{\psi}(\pi_{E})\]
 
-we want \(RL(\tilde{c})\)
+we want \(RL(\tilde{c})\).
+
 
 \subsection{Occupancy Measure Matching}
 The occupancy measure \(\rho_\pi\) measures the distribution of state-action pairs that an agent encounters when navigating the environment.
@@ -76,8 +77,84 @@ Why's this important? Because it shows that the IRL procedure tries to minimise 
 They come up with two conclusions:
 IRL is a dual of an occupancy measure matching problem. I \emph{think} this means that occupancy matching and IRL complete the same outcome.
 
+\[\min_{\rho \in D} - \bar{H}(\rho) \; subject \; to \; \rho(s,a) = \rho_{E}(s,a) \forall s \in S, a \in A\]
+
 \textbf{The induced optimal policy is the 'primal optimum'} Again, I don't know what a primal optimum is but they basically say that: IRL usually is thought of as the process of finding a cost function which explains the expert policy however it can alternatively be seen as a procedure which tries to induce a policy that matches the expert's occupancy measure.
 
+\section{Apprenticeship Learning}
 
+Classic apprenticeship algorithms usually restrict \(C\) to convex sets given by linear combinations of basis functions.
+To clarify that. If we have a space and each basis of that space is a function. Then, every point in that space is defined by a linear combination of the basis functions.
+
+So:
+\[C_{linear} = \{\sum_{i}w_{i}f_{i} : ||w||_{2} \le 1\}\]
+\[C_{convex} = \{\sum_{i}w_{i}f_{i} : \sum_{i}w_{i}=1, w_{i} \ge 0 \forall i\}\]
+
+where \(f_{i}\) is a ``basis function'' and \(w_i\) is the scalar.
+
+The objective of an apprenticeship learning algorithm is as follows:
+\[\min_{\pi} \max_{c \in C} E_{\pi} [c(s, a)] - E_{\pi_{E}}[c(s,a)]\]
+
+Apprenticeship Learning is equivalent to performing RL after IRL.
+
+If our definition of \(C\) is too restrictive and doesn't contain the real cost function of the expert then it's pretty obvious that we can't recover a policy which matches the expert. In this case there's no guarantee that \(\pi_{E}\) will outperform \(\pi\) for each cost function in \(C\).
+
+\paragraph{Apprenticeship objective optimisation}
+Since we have a paramaterised policy \(\pi_{\theta}\) the policy gradient formula will be:
+
+
+\(
+\begin{aligned}
+  &=\nabla_{\theta} \max_{c \in C} E_{\pi_{\theta}}[c(s,a)] - E_{\pi_{E}}[c(s,a)] \\
+  &=\nabla_{\theta} E_{\pi_{\theta}}[c^*(s,a)] \\
+  &=E_{\pi_{\theta}}[\nabla_{\theta} \log \pi_{\theta} (a|s) Q_{c^{*}}(s,a)]
+\end{aligned}
+\)
+
+where:
+
+\(
+\begin{aligned}
+  &c^{*} = \underset{c \in C}{\text{arg max}} E_{\pi_{\theta}}[c(s,a)] - E_{\pi_{E}}[c(s,a)] \\
+  &Q_{c^{*}}(\bar{s}, \bar{a}) = E_{\pi_{\theta}} [c^{*}(\bar{s}, \bar{a}) | s_{0} = \bar{s}, a_{0} = \bar{a}]
+\end{aligned}
+\)
+
+This is just an RL objective with cost \(c^{*}\)
+
+SOooO, here's what we can do:
+\begin{enumerate}
+\item Sample some trajectories from the current policy \(\pi_{\theta}\)
+  \item Fit a \(c^{*}\) (shown above). In the case where we have \(C_{linear}\) or \(C_{convex}\) ``this cost fitting amounts to evaluating simple analytical expressions''.
+    \item Use TRPO to produce \(\pi_{\theta_{i+1}}\)
+\end{enumerate}
+
+\section{GAIL}
+
+The first thing the authors do is create a new regulariser:
+
+\[\psi_{GA}(C) :=
+  \begin{cases}
+    E_{\pi_{E}}[g(c(s,a))] & c<0 \\
+    +\infty & \text{otherwise}
+  \end{cases}\]
+
+\[
+  g(x) =
+  \begin{cases}
+    -x-\log (1-e^{x}) & x < 0 \\
+    +\infty & \text{otherwise}
+    \end{cases}
+\]
+
+https://www.desmos.com/calculator/osicwgrejv
+
+\begin{itemize}
+\item Low penalty on cost functions that assign negative cost to expert state-action pairs.
+\item High penalty on cost functions that assign high (close to 0) cost to expert state-action pairs.
+\end{itemize}
+
+They then show that the regulariser was selected because:
+\[\psi^{*}_{GA}(\rho_{\pi}-\rho_{\pi_{E}}) = \max_{D \in (0,1)^{S \times A}} E_{\pi} [\log (D(s,a))] + E_{\pi_{E}} [\log (1 - D(s,a))]\]
 
 \end{document}

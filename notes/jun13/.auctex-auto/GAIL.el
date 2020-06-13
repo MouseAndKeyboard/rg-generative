@@ -5,6 +5,6 @@
     "latex2e"
     "article"
     "art10"
-    "graphicx"))
+    "amsmath"))
  :latex)
 
