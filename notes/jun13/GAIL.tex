@@ -1,0 +1,83 @@
+\documentclass{article}
+\title{Notes for: Generative Adversarial Imitation Learning}
+\author{M. Nef. \thanks{paper: https://arxiv.org/pdf/1812.10613.pdf}}
+\date{\today}
+\usepackage{graphicx}
+
+\begin{document}
+\maketitle
+
+\section{Goal}
+
+Imitation Learning is the name of the game. The end goal of GAIL is to have a way to produce a policy \(\pi_{\theta}\) which tries to copy another policy \(\pi_{E}\) by observing samples of this policy.
+
+E.g. behaviours which are hard to assign a reward to.
+
+\section{High Level}
+
+We have a discriminator which attempts to determine if a series of trajectories comes from the optimal policy \(\pi_{E}\) or from some other policy \(\pi_{\theta}\).
+
+Once the discriminator is no longer able to distinguish the trajectories we've likely got a very similar policy.
+
+The discriminator's confidence is used as a cost function to update the parameters \(\theta\).
+
+\section{Other approaches}
+
+\subsection{Behavioural Cloning (BC)}
+
+We treat the problem as a supervised learning problem.
+We want a way to predict the action \(\pi*\) would take given an observation.
+
+\begin{center}
+  \textbf{Covariate Shift:} The agent enters states which it was not exposed to during training. E.g. Car driving off the road.
+\end{center}
+
+Because of slight inaccuracies In BC, the policy will likey find itself in a novel state (covariate shift), it would be highly unclear what the agent might do (since it's just supervised learning). This can lead it to getting more off-course and into even more novel states. This is called compounding (or cascading) error.
+
+This is because BC learns to fit single-timestep decisions as opposed to fitting to the behaviour of \(\pi_{E}\) on the whole trajectory.
+
+\subsection{Insert more alternatives here...}
+Todo
+
+\section{Inverse Reinforcement Learning}
+Produce a reward function which best explains the actions taken by an agent.
+
+The paper uses 'Maximum Causal Entropy IRL'. Intuitively, it will find a cost function \(c \in C\) which gives a low cost to the expert policy and a high cost to all other policies. After finding the cost function we can train an RL agent on it.
+
+\[\max_{c \in C}\left( \min_{\pi \in \Pi} - H(\pi) + E_{\pi}[c(s,a)] \right) -E_{\pi_{E}}[c(s,a)] \]
+
+(Not quite sure \emph{why} the entropy term is in there) I'll probably need to read the maximum causal entropy IRL paper to fully understand its purpose.
+
+Once we have this cost function which maximises this difference between all \(\pi\) and \(\pi_{E}\) we can just do RL to find a good policy.
+
+\subsection{Selecting C}
+
+The largest set of possible cost function \( \Re^{S \times A} = \{c : S \times A \to \Re\} \).
+In order to prevent the cost function overfitting to our finite dataset it we need to add a convex function regularizer \(\psi\).
+
+The IRL procedure which finds a cost function such that the expert outperforms all other policies is now:
+
+\[IRL_{\psi}(\pi_{E}) = {c \in \Re^{S \times A}} - \psi(c) + (\min_{\pi \in \Pi} - H(\pi) + E_{\pi}[c(s,a)]) - E_{\pi_{E}}[c(s,a)]\]
+
+\[\tilde{c} \in IRL_{\psi}(\pi_{E})\]
+
+we want \(RL(\tilde{c})\)
+
+\subsection{Occupancy Measure Matching}
+The occupancy measure \(\rho_\pi\) measures the distribution of state-action pairs that an agent encounters when navigating the environment.
+Since a policy uniquely defines an occupancy measure and a valid \footnote{Positive probabilities + some more constraints} occupancy measure uniquely defines a policy
+
+With this fact, they show:
+
+\[RL(IRL_{\psi}(\pi_{E})) = argmin_{\pi \in \Pi} -H(\pi) + \psi^{*}(\rho_{\pi} - \rho_{pi_{E}})\]
+
+Why's this important? Because it shows that the IRL procedure tries to minimise the distance between the expert's occupancy measure and the new policy as measured by the convex function \(\psi^{*}\).
+
+They come up with two conclusions:
+IRL is a dual of an occupancy measure matching problem. I \emph{think} this means that occupancy matching and IRL complete the same outcome.
+
+\textbf{The induced optimal policy is the 'primal optimum'} Again, I don't know what a primal optimum is but they basically say that: IRL usually is thought of as the process of finding a cost function which explains the expert policy however it can alternatively be seen as a procedure which tries to induce a policy that matches the expert's occupancy measure.
+
+
+
+\end{document}
