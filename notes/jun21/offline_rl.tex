@@ -176,7 +176,13 @@ These are different methods to attempt to hold the learned policy, \(\pi\), clos
 \paragraph{Offline Approximate Dynamic Programming with Uncertainty Estimation} Constraints can make the Q function unlikely to suggest out-of-distribution actions. We can measure the epistemic uncertainty of the Q-function. It's fair to say that there will be a higher epistemic uncertainty about out of distribution actions and therefore we can adjust the policy to avoid these actions more often.
 
 
-
-
 This is done by learning an uncertainty distribution over many possible Q-functions from the data \(\mathcal{D}\)
+
+\subsection{Challenges and Open Problems}
+\begin{enumerate}
+  \item Distributional shift makes ADP algorithms perform very poorly in offline situations.
+  \item Uncertainty estimation seems ideal, however it's problematic since it's very hard to get high accuracy uncertainty estimates. If the estimate is incorrect and overly conservative it can prevent learning, and in the other direction it can fail to prevent OOD actions.
+  \item Since most policy constraint methods first estimate a model of the behaviour policy \(\pi_{\beta}(\cdot | s)\) to constrain the learned policy against, the effectiveness of this is highly dependent on the ability to accurately estimate \(\pi_{\beta}\).
+    \end{enumerate}
+
 \end{document}
