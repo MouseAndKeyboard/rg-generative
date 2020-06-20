@@ -9,5 +9,21 @@
 \begin{document}
 \maketitle
 
+\section{Types of Reinforcement Learning}
+\paragraph{Online Reinforcement Learning}
+Reinforcement learning approach whereby an agent acts into the environment and directly updates the policy based solely on actions from said policy. Trajectories are also trained on in the same order they are collected.
+
+The policy, \(\pi_k\), is updated with streaming data collected by \(\pi_k\) iteself.
+
+There is no buffer in online reinforcement learning, unlike Off-Policy Reinforcement Learning.
+
+\paragraph{Off-Policy Reinforcement Learning} The agent's experience is appended to a data buffer (replay buffer), \(\mathcal{D}\), and each new policy, \(\pi_k\) adds additional data to \(\mathcal{D}\).
+\(\mathcal{D}\) will therefore comprise samples from \( \pi_0 , \pi_1 , \dots, \pi_k\) and this data will be used to train a new policy \(\pi_{k+1}\).
+
+\paragraph{Offline Reinforcement Learning}
+Reinforcement learning algorithms that utilize previously collected data, without additional online data collection.
+
+Offline RL has some dataset, \(\mathcal{D}\), collected by potentially unknown policies (or policy) \(\pi_\beta\).
+The training process doesn't interact with the MDP at all.
 
 \end{document}
