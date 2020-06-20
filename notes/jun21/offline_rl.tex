@@ -117,7 +117,12 @@ The consequence of this is that all off-policy RL algorithms can be done technic
 
 
 
+\subsection{Challenges}
+\paragraph{No exploration} We can't do exploration in offline RL, so if \(\mathcal{D}\) doesn't contain any high reward transitions then we're basically screwed (there could be interesting ideas combining offline RL to pre-train online algorithms).
+\paragraph{Counterfactual Reasoning} Since we want to train an agent that performs better than the examples in \(\mathcal{D}\) we need to reason about what the samples could've done better.
 
 
+This makes it different from standard supervised learning, where the objective usually is to best fit the training data, whereas in RL we don't want to fit the training data, we want to maximise our return.
 
+\paragraph{Distributional Shift} Highly related to counterfactual reasoning, but, our examples are not going to be exactly the same as the ones the agent performs in. i.e. the learned policy, \( \pi(s,a) \) could potentially enter states outside the training distribution, since it's highly likely that \(d^{\pi} \ne d^{\pi_{\beta}}\) (e.g. stochastic environments, insufficient training data, etc). This is mainly an issue in behavioural cloning.
 \end{document}
