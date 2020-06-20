@@ -61,6 +61,7 @@ We can express the policy implicitly in terms of the \(Q\)-function:
   \label{eq:3}
   \pi(a_{t}, s_{t}) = \delta(a_{t} = \argmax Q (s_{t}, a_{t}) )
 \end{equation}
+\(\delta\) means deterministic policy.
 The idea of Q-learning is to simply get a good estimate for \(Q\) and then use this identity.
 
 
@@ -76,9 +77,15 @@ W.r.t Offline RL, the off policy actor critics can be extended to an offline set
 
 Actor Critics vs Q-learning: In Q-Learning, our goal is to find the BEST \(Q\), \(Q^{*}\), whereas in actor critic we're learning the Q-function for the current policy (so our return estimator is more accurate).
 
+\paragraph{Policy Iteration (PI)}
+Related to actor-critic.
+Two phases in PI:
+\begin{enumerate}
+  \item policy evaluation: Compute the \(Q\)-function for \(\pi\)
+  \item policy iteration: Actions are selected greedily according the \(Q\)-function.
+\end{enumerate}
+Monotonic improvements of the policy and converges to optimal policy.
 
 \paragraph{Model-Based Reinforcement Learning}
-
-
 
 \end{document}
