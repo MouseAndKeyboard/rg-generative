@@ -91,4 +91,33 @@ General term that refers to approaches that estimate the dynamics/transition fun
 
 Usually this is done so: planning can be done, backprop through time. It's also used to generate samples to augment ``model-free'' RL leanring methods
 
+\section{Offline RL}
+We're still trying to maximise (\ref{eq:1}) but we don't have the ability to go and interact with the environment to collect more transitions.
+
+
+We're provided with a static dataset of transitions \(\mathcal{D} = \{ (s_{t}^{i}, a_{t}^{i},s_{t+1}^{i},r_{t}^{i}) \}\)
+
+This can be called the training set (like in supervised learning).
+
+
+\(\pi_{\beta}\) is the distribution over states and actions in \(\mathcal{D}\). Where \( (s,a) \in \mathcal{D} \) sampled according to \(s \sim d^{\pi_{\beta}}(s)\) - the overall state visitation frequency averaged over timesteps (i.e. average state visitation frequency). \(a \sim \pi_{\beta} (a | s)\).
+
+\paragraph{disambiguations}
+``Off-policy RL'' refers to any algorithm which uses datasets of transitions where the actions in the dataset are not from the current policy.
+
+
+Off policy RL may still interact with the environment (online data collection).
+
+
+Offline means that there is no interaction with the environment.
+(Therefore offline RL is always Off-policy, but off-policy RL is not necessarily offline).
+
+
+The consequence of this is that all off-policy RL algorithms can be done technically done in an offline setting (though they're unlikely to yield great results)
+
+
+
+
+
+
 \end{document}
