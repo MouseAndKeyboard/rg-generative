@@ -7,6 +7,9 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
 \begin{document}
 \maketitle
 
@@ -50,8 +53,32 @@ where: \(\theta\) are the parameters of a policy (e.g. NN weights). \( \left( \s
 
 \paragraph{Approximate Dynamic Programming}
 
+If you can accurately estimate a state or state-action value function (\(V\) and \(Q\) respectively) then we can recover a near optimal policy.
+
+We can express the policy implicitly in terms of the \(Q\)-function:
+
+\begin{equation}
+  \label{eq:3}
+  \pi(a_{t}, s_{t}) = \delta(a_{t} = \argmax Q (s_{t}, a_{t}) )
+\end{equation}
+The idea of Q-learning is to simply get a good estimate for \(Q\) and then use this identity.
+
+
 \paragraph{Actor-Critic Algorithms}
 
+Combines ideas of policy gradients and ADP. This method uses both a parameterised policy and value function. Often they share parameters (but this is not important).
+The point of these methods is to get a better estimate of \(\hat{A} (s,a)\) when doing policy gradient estimation.
+Actor critics come in different flavours, you can have on policy (directly estimating \(V^{\pi}(s)\)) or off policy actor critics (estimate \(Q^{\pi}(s,a)\) via parameterised \(Q^{\pi}_{\phi}\)).
+
+
+W.r.t Offline RL, the off policy actor critics can be extended to an offline setting.
+
+
+Actor Critics vs Q-learning: In Q-Learning, our goal is to find the BEST \(Q\), \(Q^{*}\), whereas in actor critic we're learning the Q-function for the current policy (so our return estimator is more accurate).
+
+
 \paragraph{Model-Based Reinforcement Learning}
+
+
 
 \end{document}

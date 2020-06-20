@@ -9,6 +9,7 @@
     "amsfonts")
    (LaTeX-add-labels
     "eq:1"
-    "eq:2"))
+    "eq:2"
+    "eq:3"))
  :latex)
 
