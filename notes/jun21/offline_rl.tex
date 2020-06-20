@@ -157,7 +157,26 @@ Normally, to find \(J(\pi_{\theta})\) you need actual \(\tau \sim \pi_{\theta} \
   \item Many of these methods have been done in online off-policy RL. There hasn't been much research into offline usage of these algorithms.
   \item Importance sampling suffers from high variance. As \(\pi_{\theta}\) drifts from \(\pi_{\beta}\) the importance weights become useless. In offline RL you have no way to sample more data to decrease the distance.
 \end{enumerate}
+\pagebreak
+\section{Distributional Shift in Offline Reinforcement Learning via Dynamic Programming}
+
+\paragraph{Distributional Shift in Offline Reinforcement Learning via Dynamic Programming} Since the offline data collected comes from an unknown behavioural policy, \(\pi_{\beta}(a|s)\) with state visitation frequency \(d^{\pi_{\beta}}(s)\) when we actually run our RL agent in test it will likely have a \(d^{\pi} \ne d^{\pi_{\beta}}\), AKA distributional shift.
+
+
+The effects of distributional shift can be minimised by limiting how much we let \(\pi\) diverge from \(\pi_{\beta}\). In practice this means adding a constraint so that the KL divergence between the two is smaller than some bound. This kind of sucks because it means we can't really do much better than \(p_{\beta}\) since we're constrained to be close to it.
+
+\paragraph{Policy Constraint Methods}
+These are different methods to attempt to hold the learned policy, \(\pi\), close to the behavioural policy, \(\pi_{\beta}\) when learning the value function (or Q function).
+\begin{enumerate}
+  \item explicit f-divergence constraints
+  \item implicit f-divergence constraints
+  \item integral probability metric (IPM)
+\end{enumerate}
+
+\paragraph{Offline Approximate Dynamic Programming with Uncertainty Estimation} Constraints can make the Q function unlikely to suggest out-of-distribution actions. We can measure the epistemic uncertainty of the Q-function. It's fair to say that there will be a higher epistemic uncertainty about out of distribution actions and therefore we can adjust the policy to avoid these actions more often.
 
 
 
+
+This is done by learning an uncertainty distribution over many possible Q-functions from the data \(\mathcal{D}\)
 \end{document}
