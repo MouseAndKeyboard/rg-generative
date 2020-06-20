@@ -1,6 +1,6 @@
 \documentclass{article}
 \title{Notes for: Generative Adversarial Imitation Learning}
-\author{M. Nef. \thanks{paper: https://arxiv.org/pdf/1812.10613.pdf}}
+\author{M. Nef. \thanks{ipaper: https://arxiv.org/pdf/1812.10613.pdf}}
 \date{\today}
 \usepackage{amsmath}
 
@@ -156,5 +156,25 @@ https://www.desmos.com/calculator/osicwgrejv
 
 They then show that the regulariser was selected because:
 \[\psi^{*}_{GA}(\rho_{\pi}-\rho_{\pi_{E}}) = \max_{D \in (0,1)^{S \times A}} E_{\pi} [\log (D(s,a))] + E_{\pi_{E}} [\log (1 - D(s,a))]\]
+Is the negative log loss of the binary classification problem of distinguishing between state-action pairs of \(\pi\) and \(\pi_{E}\).
+They show that this optimal loss is very similar to the Jesnon-Shannon divergence.
+\[\min_{\pi} \psi_{GA}(\rho_{\pi}-\rho_{\pi_{E}}) - \lambda H(\pi) = D_{JS}(\rho_{\pi},\rho_{\pi_{E}}) - \lambda H(\pi) \].
+
+This connects imitation learning and GANS. Since we train a generative model by having it confuse a discriminator. \(\rho_{\pi}\) is the data distribution ``generated'' and the expert's, \(\rho_{\pi_{E}}\) is the true distribution.
+
+\section{Final Algorithm}
+\begin{itemize}
+
+  \item[\(\pi_{\theta}\)] parameterised policy (dnn)
+  \item[\(D_{w} : S \times A \to (0, 1)\)] parameterised discriminator
+
+  \end{itemize}
+
+
+Now, we alternate between an Adam gradient step on \(w\) and a TRPO step on \(\theta\).
+
+This can be intuitively thought as the discriminator being a cost function, as the TRPO algorithm decreases this ``cost'' it's moving towards parameter spaces where the discriminator is unable to distinguish it from the expert.
+
+
 
 \end{document}
