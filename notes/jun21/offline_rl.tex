@@ -125,4 +125,31 @@ The consequence of this is that all off-policy RL algorithms can be done technic
 This makes it different from standard supervised learning, where the objective usually is to best fit the training data, whereas in RL we don't want to fit the training data, we want to maximise our return.
 
 \paragraph{Distributional Shift} Highly related to counterfactual reasoning, but, our examples are not going to be exactly the same as the ones the agent performs in. i.e. the learned policy, \( \pi(s,a) \) could potentially enter states outside the training distribution, since it's highly likely that \(d^{\pi} \ne d^{\pi_{\beta}}\) (e.g. stochastic environments, insufficient training data, etc). This is mainly an issue in behavioural cloning.
+
+\section{Offline Evaluation Via Importance Sampling}
+
+\paragraph{Off-Policy Evaluation via Importance Sampling} We can use importance sampling to estimate \(J(\pi_{\theta})\) with trajectories sampled from \(\pi_{\beta} (\tau)\). This then allows us to pick the \(\pi_{\theta}\) which maximises \(J(\pi_{\theta})\).
+
+
+Normally, to find \(J(\pi_{\theta})\) you need actual \(\tau \sim \pi_{\theta} \) but importance sampling lets us use \(\tau \sim \pi_{\beta}\) \footnote{\(\pi(\tau) = \prod_{t=0}^{H} \pi(a_{t}, s_{t}) \)}.
+
+\begin{equation}
+\label{eq:4}
+  J(\pi_{\theta}) = \mathbb{E}_{\tau \sim \pi_{\beta}(\tau)} \left [ \frac{\pi_{\theta}(\tau)}{\pi_{\beta}(\tau)} \sum_{t=0}^{H}\gamma^{t}r(s,a) \right ]
+\end{equation}
+
+\paragraph{Off-Policy Policy Gradient} Basically using the same method as before (importance sampling), we can adapt the policy gradient (2) when sampling only from \(\pi_{\beta}\) rather than \(\pi_{\theta}\).
+
+\begin{equation}
+  \label{eq:5}
+  \nabla_{\theta} J(\pi_{\theta}) = \mathbb{E}_{\tau \sim \pi_{beta}(\tau)} \left [ \frac{\pi_{\theta}(\tau)}{\pi_{\beta}(\tau)} \sum_{\pi_{\beta}(\tau)}^{H} \gamma ^{t} \nabla \log \pi_{\theta}(a_{t}|s_{t})\hat{A}(s_{t},a_{t})  \right]
+  \end{equation}
+
+  \paragraph{Marginalised Importance Sampling} Remember that \(d^{\pi}(s)\) is a distribution over state visitation frequencies.
+
+  The \emph{state-marginal importance ratio} \(\rho^{\pi_{\theta}}= \frac{d^{\pi_{\theta}}(s)}{d^{\pi_{\beta}}(s)} \)
+
+
+  I didn't fully understand this part and didn't have time to look into it.
+
 \end{document}
