@@ -26,4 +26,25 @@ Reinforcement learning algorithms that utilize previously collected data, withou
 Offline RL has some dataset, \(\mathcal{D}\), collected by potentially unknown policies (or policy) \(\pi_\beta\).
 The training process doesn't interact with the MDP at all.
 
+\section{General RL}
+\pagebreak
+\paragraph{Policy Gradients}
+
+Since the following is the RL objective (what we want to maximise):
+
+\begin{equation}
+\label{eq:1}
+J(\pi) = \mathbb{E}_{\tau \sim p_\pi (\tau)} \left[ \sum_{t=0}^H \gamma^t r(s_t, a_t) \right]
+\end{equation}
+
+where: \(r(s_t, a_t)\) is the reward function of the MDP. \(\gamma^t r(s_t , a_t)\) is the discounted reward. \(\ \sum_{t=0}^H \gamma^t r(s_t, a_t) \) is the return conditioned on some selected trajectory. \(\tau \sim p_\pi(\tau)\)
+\(\tau\) is a random variable which samples from the Trajectory Distribution. \(\mathbb{E}\) We're looking at an expectation, so we're interested in the discounted future reward of each trajectory weighted by the probability of it occuring.
+
+
+\paragraph{Approximate Dynamic Programming}
+
+\paragraph{Actor-Critic Algorithms}
+
+\paragraph{Model-Based Reinforcement Learning}
+
 \end{document}

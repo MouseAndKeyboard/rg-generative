@@ -5,6 +5,8 @@
     "latex2e"
     "article"
     "art10"
-    "amsmath"))
+    "amsmath")
+   (LaTeX-add-labels
+    "eq:1"))
  :latex)
 
