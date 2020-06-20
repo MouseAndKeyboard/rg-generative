@@ -185,4 +185,31 @@ This is done by learning an uncertainty distribution over many possible Q-functi
   \item Since most policy constraint methods first estimate a model of the behaviour policy \(\pi_{\beta}(\cdot | s)\) to constrain the learned policy against, the effectiveness of this is highly dependent on the ability to accurately estimate \(\pi_{\beta}\).
     \end{enumerate}
 
+\section{Offline Model-Based Reinforcement Learning}
+Learning a model is highly beneficial in offline RL since it can be solved using normal supervised learning approaches. It doesn't need importance sampling, or any other variance-altering methods. This is because the environment dynamics are assumed to be the same during test time.
+
+\paragraph{Model Exploitation and Distribution Shift}
+Models are usually used for either: Planning (directly using the model) or training a policy (using the model to make a policy perform better).
+
+
+The states that a dynamics model will have to process during test is determined by the state visitation frequency: \(s \sim d^{\pi}(s)\). Here, \(\pi\) could either be a normal, explicit, policy or it could be an ``implicit'' policy (running a planning algorithm).
+
+
+Since the model has to predict based on \(d^{\pi}\) it faces distribution shift from both states and actions (if the actions aren't the same as the behaviour policy's then it won't know what next-state to predict, if the agent is currently in an OOD state it will also be hard for the world model to know the next state).
+
+\paragraph{Model Exploitation} Since the world model is susceptible to distribution shift, if OOD actions are taken or OOD states are entered it's very possible for the model to erroneously predict a state which the policy would highly value. This can lead to the policy intentionally selecting OOD actions to make the model screw up and predict great next states (even though the next state won't actually be any good).
+
+
+Similar to earlier, the epistemic uncertainty of the model can be estimated of the learned transition model \(T_{\phi} (s_{t+1}| s_{t},s_{a})\). Bayesian neural networks (I haven't learned about these yet) can be used for this epistemic uncertainty estimation.
+
+
+\paragraph{Model-Based Offline Reinforcement Learning} As long as the model exploitation is controlled, it's totally acceptable for the model to be similar to what we observe in the training set (since this is typical SL). In general, models tend to be very good in offline RL.
+
+\begin{enumerate}
+  \item Action-conditioned convolutional neural networks have been very successful in Atari games.
+  \item Prediction of future rewards or ``reward features'' conditioned on a sequence of future actions (with no actual prediction of observations).
+  \item Special constraints (which cause ``Lyapunov stability'' - need to look into) on the model can cause the policy to be constrained to only take ``safe'' actions.
+  \item Deep imitatative models (DIMs) learn a ``normalising flow model'' over future trajectories.
+\end{enumerate}
+
 \end{document}
