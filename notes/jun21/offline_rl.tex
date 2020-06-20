@@ -152,4 +152,12 @@ Normally, to find \(J(\pi_{\theta})\) you need actual \(\tau \sim \pi_{\theta} \
 
   I didn't fully understand this part and didn't have time to look into it.
 
+\subsection{Challenges and Comments}
+\begin{enumerate}
+  \item Many of these methods have been done in online off-policy RL. There hasn't been much research into offline usage of these algorithms.
+  \item Importance sampling suffers from high variance. As \(\pi_{\theta}\) drifts from \(\pi_{\beta}\) the importance weights become useless. In offline RL you have no way to sample more data to decrease the distance.
+\end{enumerate}
+
+
+
 \end{document}
