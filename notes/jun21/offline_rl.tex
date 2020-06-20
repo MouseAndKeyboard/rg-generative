@@ -212,4 +212,12 @@ Similar to earlier, the epistemic uncertainty of the model can be estimated of t
   \item Deep imitatative models (DIMs) learn a ``normalising flow model'' over future trajectories.
 \end{enumerate}
 
+\subsection{Challenges and Open Problems}
+
+\begin{enumerate}
+  \item Although model based RL works well, most of the research has been in online, off-policy RL and then basically slapping it onto offline Rl (not much focused direct research).
+  \item Long time horizon prediction and very-high dimensional observations are hard to predict
+    \item It hasn't been shown theoretically that model-based RL can/should improve over model-free DP algorithms. They both solve a prediction problem (DP predicts future reward and Models predict future state). (this is an open question, although not really impactful - since emperically models are very useful)
+    \end{enumerate}
+
 \end{document}
