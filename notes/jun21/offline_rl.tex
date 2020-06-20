@@ -5,6 +5,7 @@
 \author{M. Nef. \thanks{paper: https://arxiv.org/pdf/1812.10613.pdf}}
 \date{\today}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 
 \begin{document}
 \maketitle
@@ -13,7 +14,7 @@
 \paragraph{Online Reinforcement Learning}
 Reinforcement learning approach whereby an agent acts into the environment and directly updates the policy based solely on actions from said policy. Trajectories are also trained on in the same order they are collected.
 
-The policy, \(\pi_k\), is updated with streaming data collected by \(\pi_k\) iteself.
+The policy, \(\pi_k\), is updated with streaming data collected by \(\pi_k\) itself.
 
 There is no buffer in online reinforcement learning, unlike Off-Policy Reinforcement Learning.
 
@@ -34,12 +35,18 @@ Since the following is the RL objective (what we want to maximise):
 
 \begin{equation}
 \label{eq:1}
-J(\pi) = \mathbb{E}_{\tau \sim p_\pi (\tau)} \left[ \sum_{t=0}^H \gamma^t r(s_t, a_t) \right]
+J(\pi) = \mathbb{E}_{\tau \sim p_\pi (\tau)} \left[ \sum_{t=0}^H \gamma^t r(s_t, a_t) \right ]
 \end{equation}
 
 where: \(r(s_t, a_t)\) is the reward function of the MDP. \(\gamma^t r(s_t , a_t)\) is the discounted reward. \(\ \sum_{t=0}^H \gamma^t r(s_t, a_t) \) is the return conditioned on some selected trajectory. \(\tau \sim p_\pi(\tau)\)
-\(\tau\) is a random variable which samples from the Trajectory Distribution. \(\mathbb{E}\) We're looking at an expectation, so we're interested in the discounted future reward of each trajectory weighted by the probability of it occuring.
+\(\tau\) is a random variable which samples from the Trajectory Distribution. \(\mathbb{E}\) We're looking at an expectation, so we're interested in the discounted future reward of each trajectory weighted by the probability of it occurring.
 
+\begin{equation}
+\label{eq:2}
+\nabla_\theta J(\pi_\theta) = \mathbb{E}_{\tau \sim p_{\pi_\theta} (\tau)} \left [ \sum_{t=1}^H \gamma^t \nabla_\theta \log \pi_\theta (a_t | s_t) \left( \sum_{t' = t}^H \gamma^{t'-t} r(s_{t'}, a_{t'}) - b(s_t) \right) \right]
+\end{equation}
+
+where: \(\theta\) are the parameters of a policy (e.g. NN weights). \( \left( \sum_{t' = t}^H \gamma^{t'-t} r(s_{t'}, a_{t'}) - b(s_t) \right) \) is the return estimator (often denoted \(\hat{A}(s_{t}, a_{t})\)). \(b(s_{t})\) is the ``baseline'' and can be estimated as the average reward over the sampled trajectories.
 
 \paragraph{Approximate Dynamic Programming}
 

@@ -5,8 +5,10 @@
     "latex2e"
     "article"
     "art10"
-    "amsmath")
+    "amsmath"
+    "amsfonts")
    (LaTeX-add-labels
-    "eq:1"))
+    "eq:1"
+    "eq:2"))
  :latex)
 
