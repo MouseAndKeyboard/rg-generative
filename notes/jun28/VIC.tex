@@ -105,9 +105,31 @@ If we have 3 options, \(\Omega_{1}, \Omega_{2}, \Omega_{3}\) and \(\Omega_{1}\) 
 \begin{equation}
   \label{eq:5}
   p(s_{f}|s_{0}) = \sum_{\Omega} p^{J}(s_{f}|s_{0},\Omega) p^{C}(\Omega | s_{0})
-  \end{equation}
+\end{equation}
   probability of ending up in a state conditioned on an option multiplied by the probability of said option actually being selected.
 
+
+  Now, since we want to get a diverse range of possible intrinsic options, we want to maximise the entropy of the final state \(s_{f}\).
+
+  \paragraph{Objective} Maximising the mutual information \(I(\Omega, s_{f}| s_{0})\) between options and final states under the distribution \(p(\Omega,s_{f}|s_{0}) = p^{J}(s_{f}|s_{0}, \Omega)p^{C}(\Omega | s_{0})\).
+
+
+  If we have 2 options \(\Omega_{1}\) and \(\Omega_{2}\) and we're currently in state \(s_{f_{1}}\), if we can correctly say that it was \(\Omega_{1}\) which must've just been executed and then in some other terminal state \(s_{f_{2}}\) we can correctly say that \(\Omega_{2}\) was selected, then these are intrinsically different options.
+
+
+
+  Because we want a large set of intrinsic options, we want to maximise the entropy of \eqref{eq:4} which is given by:
+
+\begin{equation}
+  \label{eq:6}
+-\sum_{\Omega} p^{C}(\Omega|s_{0}) \log p^{C}(\Omega | s_{0})
+\end{equation}
+Remember, this just means picking options which are the most different, and this is done by ``grouping'' similar options together.
+
+We don't just want to maximise this entropy since an option which just randomly moves around is kind of useless however this option could potentially be included if we only maximised the entropy here.
+
+
+This is why we must also maximise \(\log p(\Omega | s_{0}, s_{f})\). In words, we want to be confident that a specific option was selected based on the start and end point. You can see, an option which randomly moves around is going to be filtered out here since there's a really low chance of it being able to consistently transition from \(s_{0} \to s_{f}\).
 
 
 \end{document}
