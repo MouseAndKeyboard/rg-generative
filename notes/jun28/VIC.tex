@@ -84,9 +84,19 @@ In RL, instead of using likelihood, the empowerment metric can be used. A higher
     \item \(\Omega \in \Re^{d}\) is a \(d\)-dimensional vector. Policies for nearby \(\Omega\)s will be similar.
 \end{enumerate}
 
-\paragraph{Intrinsic Options} Intrinsic options are a subset of all possible options. Two intrinsic options are the same where \(s_{0}\) maps to the same final state \(s_{f}\) following that option.
+\paragraph{Intrinsic Options} Intrinsic options are a subset of all possible options. Two intrinsic options are the same where \(s_{0}\) maps to the same final state \(s_{f}\) following that option. If our environment is stochastic then even the same option may lead to slightly different states. Therefore an option defines this distribution.
+\begin{equation}
+  \label{eq:3}
+  p^{J}(s_{f}|s_{0}, \Omega)
+\end{equation}
 
-\paragraph{\(p^{J}(s_{f}|s_{0}, \Omega)\)}
+Since an intrinsic option is more an ``idea'' than an actual option (it's the idea of going from point A to point B), we want a fair way to select different intrinsic options - not really caring about how it gets done.
+If we were to uniformly randomly select an intrinsic option we would have to have a way of grouping options which complete the same intrinsic option together. This is best explained with an example.
 
+
+If we have 3 options, \(\Omega_{1}, \Omega_{2}, \Omega_{3}\) and \(\Omega_{1}\) always leads to \(s_{1}\) while \(\Omega_{2} \text{ and } \Omega_{3}\) both lead to \(s_{2}\) then, to maximise behaviour diversity (do the most stuff), half the time we would select \(\Omega_{1}\) and half the time we would select (not the first option), we would randomly pick between \(\Omega_{2}\) and \(\Omega_{3}\). The probability of selecting any particular \(\Omega_{k}\) is given by the following, this is the ``controllability distribution'':
+\begin{equation}
+  \label{eq:4}
+  p^{C}(\Omega | s_{0})
+  \end{equation}
 \end{document}
-
