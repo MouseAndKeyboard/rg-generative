@@ -76,6 +76,17 @@ In RL, instead of using likelihood, the empowerment metric can be used. A higher
 
 \section{Intrinsic Control}
 
+\paragraph{How does an options policy work?} In practice, the policy \(\pi(a|s,\Omega)\) acts as a normal policy, selecting actions based on states. Additionally, this policy has a special termination action which ends the options policy and returns control to the ``master policy''. The \(\Omega\) this options policy is conditioned on can be constructed in a variety of ways:
+
+\begin{enumerate}
+  \item Each \(\Omega\) takes a finite \(n\) number of values. Where \(\forall \; \Omega_{i} \implies \pi_{i}\).
+  \item \(\Omega\) is a binary vector of length \(n\) therefore there is \(2^{n}\) different possible options.
+    \item \(\Omega \in \Re^{d}\) is a \(d\)-dimensional vector. Policies for nearby \(\Omega\)s will be similar.
+\end{enumerate}
+
+\paragraph{Intrinsic Options} Intrinsic options are a subset of all possible options. Two intrinsic options are the same where \(s_{0}\) maps to the same final state \(s_{f}\) following that option.
+
+\paragraph{\(p^{J}(s_{f}|s_{0}, \Omega)\)}
 
 \end{document}
 
