@@ -35,13 +35,13 @@ This comes to be important, since, depending on how we define \(\Omega\) we will
 When an option's policy is executed, the current state the agent is initially in is denoted \(s_{0}\). The final state the agent is in when the option's policy returns control is denoted \(s_{f}\).
 
 
-In this paper, they say two options are identical if when both starting in \(s_{0}\) they both reach the same terminal state \(s_{f}\).
+In this paper, they say two intrinsic options are identical if when both starting in \(s_{0}\) they both reach the same terminal state \(s_{f}\). Although not explicitly written I assume an extrinsic option does not have this quality. Intrinsic options can therefore be described as options which meaningfully affect the world.
 
 
 \begin{figure}[!ht]
 \begin{center}
   \includegraphics[width=60mm]{images/same_options.png}
-  \caption{Two options which are considered the same. both start at (1,1) and terminate at (4,4) however their path is different.}
+  \caption{These two intrinsic options which are considered the same. both start at (1,1) and terminate at (4,4) however their path is different.}
 \end{center}
 \end{figure}
 
@@ -58,5 +58,5 @@ They create an algorithm to generate as many {\bf different options} for an agen
 \paragraph{What's so special?} Normally, options are relatively rigid and are simply policies which are learnt by the agent over time, they appear to the agent as actions and return control once they terminate. This paper wants a way to build up a set of options which will allow the agent to get to, or get close to, any state it desires. The point of this paper isn't to make up options which will maximise reward, simply to make up options which will let the agent ``get around''.
 
 
-
+\paragraph{What's this about empowerment!?} Using empowerment as an objetive, the agent will seek out states which have the highest number of intrinsic options. Importantly, the agent should be good at actually executing these option policies (otherwise what's the point). Because this is the reinforcement learning paradigm, the agent initially has no understanding of the options which could be available to it, therefore it still needs to explore the environment to find these high empowerment states.
 \end{document}
