@@ -59,4 +59,23 @@ They create an algorithm to generate as many {\bf different options} for an agen
 
 
 \paragraph{What's this about empowerment!?} Using empowerment as an objetive, the agent will seek out states which have the highest number of intrinsic options. Importantly, the agent should be good at actually executing these option policies (otherwise what's the point). Because this is the reinforcement learning paradigm, the agent initially has no understanding of the options which could be available to it, therefore it still needs to explore the environment to find these high empowerment states.
+
+
+\paragraph{Relationship with unsupervised learning.} In standard UL we have the data likelihood metric for figuring out how good our unsupervised learning algorithm is, we have some data, our UL algorithm identifies some structure and we look at the likelihood to see how well the model explains the data. In the context of this paper we want to do some sort of unsupervised learning to find the intrinsic options available to the agent.
+
+
+The difference in this case is that with RL, not all the data is known beforehand, the agent needs to interact with the environment to expose examples of different states and environment dynamics.
+
+
+In RL, instead of using likelihood, the empowerment metric can be used. A higher empowerment suggests our model of the different options is good, since it's basically saying ``our options, with high confidence, will lead to specific final states''.
+
+\begin{equation}
+  \label{eq:2}
+  \text{Empowerment measures the mutual information between action choices and final states}
+\end{equation}
+
+\section{Intrinsic Control}
+
+
 \end{document}
+
