@@ -55,6 +55,7 @@ Additionally, there are 2 types of options. {\bf Closed loop} options, and {\bf 
 They create an algorithm to generate as many {\bf different options} for an agent as possible. Each of these options should terminate at a different location to all of the others. These options can then be executed by the agent to either maximise reward or maximise ``empowerment'' (which is basically a measure of an agent's ability to reach new states from the current state).
 
 
+\paragraph{What's so special?} Normally, options are relatively rigid and are simply policies which are learnt by the agent over time, they appear to the agent as actions and return control once they terminate. This paper wants a way to build up a set of options which will allow the agent to get to, or get close to, any state it desires. The point of this paper isn't to make up options which will maximise reward, simply to make up options which will let the agent ``get around''.
 
 
 
