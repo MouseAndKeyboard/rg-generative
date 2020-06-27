@@ -137,5 +137,23 @@ This is why we must also maximise \(\log p(\Omega | s_{0}, s_{f})\). In words, w
 \end{equation}
 
 q predicts which option was selected based on the start and end points.
+\pagebreak
+\section{The actual algorithm}
+
+The following functions are approximated by neural networks (or similar):
+\begin{enumerate}
+  \item[\(p^{C}(\Omega | s_{0})\)] Probability of selecting this option initially.
+  \item[\(q(\Omega | s_{0} , s_{f})\)] Probability this option was selected based on what we've seen.
+  \item[\( \pi (a | \Omega, s )\)] Option's policy
+\end{enumerate}
+
+
+\begin{figure}[!ht]
+  \includegraphics[width=190mm]{images/algorithm.png}
+  \caption{The main algorithm}
+\end{figure}
+
+What it's saying:
+We pick an option, \(\Omega\) from the initial distribution then we want to take actions that lead to state \(s_{f}\) so that we can be the most confident that it was indeed the \(\Omega\) option which was picked. If we confidently predict correctly (\(q\) is correct) then other options don't lead to this state (or at least less than this one).
 
 \end{document}
