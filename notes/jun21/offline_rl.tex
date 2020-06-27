@@ -209,7 +209,7 @@ Similar to earlier, the epistemic uncertainty of the model can be estimated of t
   \item Action-conditioned convolutional neural networks have been very successful in Atari games.
   \item Prediction of future rewards or ``reward features'' conditioned on a sequence of future actions (with no actual prediction of observations).
   \item Special constraints (which cause ``Lyapunov stability'' - need to look into) on the model can cause the policy to be constrained to only take ``safe'' actions.
-  \item Deep imitatative models (DIMs) learn a ``normalising flow model'' over future trajectories.
+  \item Deep imitatative models (DIMs) learn a normalising flow model over future trajectories.
 \end{enumerate}
 
 \subsection{Challenges and Open Problems}
@@ -217,7 +217,7 @@ Similar to earlier, the epistemic uncertainty of the model can be estimated of t
 \begin{enumerate}
   \item Although model based RL works well, most of the research has been in online, off-policy RL and then basically slapping it onto offline Rl (not much focused direct research).
   \item Long time horizon prediction and very-high dimensional observations are hard to predict
-    \item It hasn't been shown theoretically that model-based RL can/should improve over model-free DP algorithms. They both solve a prediction problem (DP predicts future reward and Models predict future state). (this is an open question, although not really impactful - since emperically models are very useful)
+    \item It hasn't been shown theoretically that model-based RL can/should improve over model-free DP algorithms. They both solve a prediction problem (DP predicts future reward and Models predict future state). (this is an open question, although not really  - since empirically models are very useful)
     \end{enumerate}
 
 \end{document}

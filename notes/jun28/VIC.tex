@@ -50,6 +50,11 @@ Additionally, there are 2 types of options. {\bf Closed loop} options, and {\bf 
 \paragraph{Open Loop} options are where you select a sequence of actions to execute and the agent then blindly follows this pre-decided sequence (regardless of new observations).
 \paragraph{Closed Loop} options are where you run a policy conditioned on the option representation. This allows the agent to respond to changes in the environment.
 
+\section{Body}
+
+They create an algorithm to generate as many {\bf different options} for an agent as possible. Each of these options should terminate at a different location to all of the others. These options can then be executed by the agent to either maximise reward or maximise ``empowerment'' (which is basically a measure of an agent's ability to reach new states from the current state).
+
+
 
 
 
